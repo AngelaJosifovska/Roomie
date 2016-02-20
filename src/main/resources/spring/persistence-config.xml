@@ -1,16 +1,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	
+	
     <context:property-placeholder location="classpath:spring/data-access.properties"/>
-
-    <!-- enables scanning for @Transactional annotations -->
-    <tx:annotation-driven/>
+    
+    <tx:annotation-driven />
 
     <!-- DataSource configuration for the tomcat jdbc connection pool See here
    for more details on commons-dbcp versus tomcat-jdbc: http://blog.ippon.fr/2013/03/13/improving-the-performance-of-the-spring-petclinic-sample-application-part-3-of-5/ -->
@@ -20,7 +23,7 @@
           p:username="${jdbc.username}"
           p:password="${jdbc.password}"/>
 
-    <jpa:repositories base-package="mk.ukim.finki.wp.repository"
+    <jpa:repositories base-package="mk.ukim.finki.roomie.persistence"
                       entity-manager-factory-ref="entityManagerFactory"/>
 
 
@@ -28,7 +31,7 @@
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource">
 
-        <property name="packagesToScan" value="mk.ukim.finki.wp.model"/>
+        <property name="packagesToScan" value="mk.ukim.finki.roomie.model"/>
         <property name="persistenceUnitName" value="wp"/>
 
         <property name="jpaVendorAdapter">
@@ -49,7 +52,7 @@
         hierarchy). -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-    <context:component-scan base-package="mk.ukim.finki.wp.repository"/>
 
+	<context:component-scan base-package="mk.ukim.finki.roomie.repository" />
 
 </beans>
