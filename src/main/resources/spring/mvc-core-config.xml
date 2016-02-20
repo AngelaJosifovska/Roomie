@@ -14,43 +14,56 @@
     <import resource="mvc-view-config.xml"/>
 
     <!-- - POJOs labeled with the @Controller and @Service annotations are auto-detected. -->
-    <context:component-scan base-package="mk.ukim.finki.wp.resources"/>
+    <context:component-scan base-package="mk.ukim.finki.roomie.web"/>
+    
+    <mvc:annotation-driven></mvc:annotation-driven>
 
 
+<!--     all resources inside folder src/main/webapp/resources are mapped so
+	        they can be refered to inside JSP files (see header.jsp for more details) -->
+<!--     <mvc:resources mapping="/resources/**" location="/static/"/> -->
+
+<!--     <mvc:view-controller path="/" view-name="index"/> -->
+
+<!--     serve static resources (*.html, ...) from src/main/webapp/ -->
+<!--     <mvc:default-servlet-handler/> -->
+
+<!--     <bean id="conversionService" -->
+<!--           class="org.springframework.format.support.FormattingConversionServiceFactoryBean"> -->
+<!--     </bean> -->
+
+
+<!--     - Message source for this context, loaded from localized "messages_xx"
+         	files. - Files are stored inside src/main/resources -->
+<!--     <bean id="messageSource" -->
+<!--           class="org.springframework.context.support.ResourceBundleMessageSource" -->
+<!--           p:basename="messages/messages"/> -->
+
+<!--     - This bean resolves specific workTypes of exceptions to corresponding
+	         logical - view names for error views. -->
+<!--     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+<!--         view name resolved using bean of type InternalResourceViewResolver
+             	(declared in web-view-config.xml) -->
+<!--         <property name="defaultErrorView" value="exception"/> -->
+<!--         results into 'WEB-INF/jsp/exception.jsp' -->
+<!--         <property name="warnLogCategory" value="warn"/> -->
+<!--         needed otherwise exceptions won't be logged anywhere -->
+<!--     </bean> -->
+
+<!--     <bean id="multipartResolver" -->
+<!--           class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+<!--     </bean> -->
+    
     <!-- all resources inside folder src/main/webapp/resources are mapped so
         they can be refered to inside JSP files (see header.jsp for more details) -->
-    <mvc:resources mapping="/resources/**" location="/static/"/>
+    <!-- <mvc:resources mapping="/resources/**" location="/static/"/>  -->
+    <mvc:resources mapping="/public/**" location="/static/"/>
 
+	<!-- The default path -->
     <mvc:view-controller path="/" view-name="index"/>
 
     <!-- serve static resources (*.html, ...) from src/main/webapp/ -->
     <mvc:default-servlet-handler/>
-
-    <bean id="conversionService"
-          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-    </bean>
-
-
-    <!-- - Message source for this context, loaded from localized "messages_xx"
-        files. - Files are stored inside src/main/resources -->
-    <bean id="messageSource"
-          class="org.springframework.context.support.ResourceBundleMessageSource"
-          p:basename="messages/messages"/>
-
-    <!-- - This bean resolves specific workTypes of exceptions to corresponding
-        logical - view names for error views. -->
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <!-- view name resolved using bean of type InternalResourceViewResolver
-            (declared in web-view-config.xml) -->
-        <property name="defaultErrorView" value="exception"/>
-        <!-- results into 'WEB-INF/jsp/exception.jsp' -->
-        <property name="warnLogCategory" value="warn"/>
-        <!-- needed otherwise exceptions won't be logged anywhere -->
-    </bean>
-
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-    </bean>
 
 
 </beans>

@@ -8,8 +8,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-
-       <context:component-scan base-package="mk.ukim.finki.wp.service"/>
-
+	
+		<import resource="persistence-config.xml"/>
+	
+       	<context:component-scan base-package="mk.ukim.finki.roomie.service"/>
 
 </beans>
