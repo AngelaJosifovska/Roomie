@@ -1,0 +1,405 @@
+<style>
+    .thumbnail_cust {
+        height: 50px;
+    }
+    .thumbnail_cust img {
+        display: block;
+        width: auto;
+        height: 100%;
+    }
+</style>
+
+
+<!-- PROPERTY INFORMATION -->
+<div class="container" ng-controller="RentalUnitController">
+
+    <div style="float: right; clear: both;" ng-controller="RatingController" ng-init="init()">
+        <div>
+            <label class="title"></label> <h3 style="display: inline; color: #DF691A"><small>Rating:</small> {{ (rating | number: 2) || (0 | number: 2) }}<small style="color: #DF691A">/5.00</small></h3> <br/>
+        </div>
+
+        <div style="margin-top: 15px" ng-show="authenticated">
+            <uib-rating ng-model="myRating.rating_points" max="5" on-hover="hoveringOver(value)" ng-click="starClick()" on-leave="overStar = null" state-on="'fa fa-star fa-2x'" state-off="'fa fa-star-o fa-2x'"></uib-rating> <br/>
+            <span class="pull-right" style="margin-right: 15px; margin-top: 10px; padding: 5px 10px; border-radius: 3px" class="label" ng-class="{ 'label-danger': overStar < 3, 'label-info': overStar == 3, 'label-success': overStar > 3 }" ng-show="overStar">{{ overStar }}/5</span>
+        </div>
+    </div>
+
+    <h3>
+        Property #{{property.id}} <br />
+        <small>
+            Posted on Roomie
+            <time am-time-ago="property.created_at" title="{{ property.created_at | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time>
+            by <a href="{{ '#/userProfile/' + property.user.id }}">{{ property.user.name }}</a>
+        </small>
+    </h3>
+
+    <button type="button" class="btn btn-danger" style="margin-bottom: 10px" ng-show="authenticated && currentUser.id == property.user_id" ng-click="toggleActivation()">
+        <span ng-show="property.property_active == 1">Hide property</span>
+        <span ng-show="property.property_active == 0">Show property</span>
+    </button>
+
+
+    <!-- UPLOAD PROPERTY PICTURE -->
+
+    <!-- Modal -->
+    <form id="propertyPhotoUpload" class="modal fade" role="dialog" ng-controller="FileUploadController">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload a new photo</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger fade-in" ng-show="errors.length != 0">
+                        <a href class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> <br />
+                        <div ng-repeat="err in errors">{{ err }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photoName" class="title">File name:</label>
+                        <span id="photoName" class="info-text">{{ photo_name }}</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photoSize" class="title">File size:</label>
+                        <span id="photoSize" class="info-text">{{ (photo_size / 1024 | number:0) || 0 }} KB</span>
+                        <!--<span class="info-text" ng-show="!photo_size">0 KB</span>-->
+                    </div>
+
+                    <div class="form-group">
+                        <input type="file" class="btn" file-model="photo" file-data />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imgCaption" class="title">Caption:</label>
+                        <textarea id="imgCaption" placeholder="Enter caption..." name="caption" ng-model="caption" class="form-control" rows="2" maxlength="50"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" ng-click="uploadRentalPhoto()">Upload</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+    <!-- PROPERTY DETAILS-->
+    <div class="panel-group" style="margin-top: 40px">
+        <form editable-form name="propertyForm" onaftersave="saveRentalUnit()">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="display: inline-block">Property Details</h4>
+
+                    <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == property.user_id">
+                        <!-- button to show form -->
+                        <button type="button" class="btn btn-default" ng-click="propertyForm.$show()" ng-show="!propertyForm.$visible">
+                            <i class="fa fa-pencil fw"></i>
+                            Edit
+                        </button>
+                    </span>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <i class="flaticon-home78"></i>
+                            <!-- editable field -->
+                            <label style="margin-left: 3px" for="type" class="title">Property type: </label>
+                            <span id="type" editable-select="property.type" ng-show="!propertyForm.$visible" e-name="type" e-ng-options="t.value as t.text for t in types" e-required>{{ showType(property) }}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <i class="flaticon-sign20"></i>
+                            <!-- editable field -->
+                            <label for="lease_length" class="title">Lease length (in months): </label>
+                            <span id="lease_length" editable-number="property.lease_length" ng-show="!propertyForm.$visible" e-name="lease_length" e-min="1" e-required>{{ property.lease_length || '--unknown--' }}</span>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <i class="flaticon-money132"></i>
+                            <!-- editable field -->
+                            <label style="margin-left: 3px" for="rent" class="title">Monthly rent: </label>
+                            <span id="rent" editable-text="property.rent" ng-show="!propertyForm.$visible" e-name="rent" e-required>{{ property.rent || '--unknown--' }}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <i class="flaticon-cocktail17"></i>
+                            <!-- editable field -->
+                            <label style="margin-left: 3px" for="class" class="title">Property class: </label>
+                            <span id="class" editable-select="property.class" ng-show="!propertyForm.$visible" e-name="class" e-ng-options="c.value as c.text for c in classes" e-required>{{ showClass(property) }}</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <i class="flaticon-logistics3"></i>
+                            <!-- editable field -->
+                            <label style="margin-left: 3px" for="move_in_from" class="title">Move in from: </label>
+                            <span id="move_in_from" editable-bsdate="property.move_in_from" e-uib-datepicker-popup="dd/MM/yyyy" ng-show="!propertyForm.$visible" e-is-open="datePicker.isOpen" e-min-date="datePicker.minDate" e-required>
+                                {{ (property.move_in_from | date:"dd MMMM yyyy") || 'empty' }}
+                            </span>
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-default" ng-show="propertyForm.$visible" ng-click="openPopUp()">
+                                <i class="fa fa-calendar fw"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <i class="flaticon-beds12"></i>
+                            <!-- editable field -->
+                            <label for="num_bedrooms" class="title">Number of bedrooms: </label>
+                            <span id="num_bedrooms" editable-number="property.num_bedrooms" ng-show="!propertyForm.$visible" e-name="num_bedrooms" e-min="0" e-required>{{ property.num_bedrooms || '--unknown--' }}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <i class="flaticon-bathtub3"></i>
+                            <!-- editable field -->
+                            <label for="num_bathrooms" class="title">Number of bathrooms: </label>
+                            <span id="num_bathrooms" editable-number="property.num_bathrooms" ng-show="!propertyForm.$visible" e-name="num_bathrooms" e-min="0" e-required>{{ property.num_bathrooms || '--unknown--' }}</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <i class="flaticon-luxury6"></i>
+                            <!-- editable field -->
+                            <label style="margin-left: 3px" for="furniture" class="title">Furniture: </label>
+                            <span id="furniture" editable-select="property.furniture" ng-show="!propertyForm.$visible" e-name="furniture" e-ng-options="f.value as f.text for f in furnished" e-required>{{ showFurniture(property) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <i class="flaticon-building210"></i>
+                            <!-- editable field -->
+                            <label for="city" class="title">City: </label>
+                            <span id="city" editable-text="property.city" ng-show="!propertyForm.$visible" e-name="city" e-required>{{ property.city || '--unknown--' }}</span>
+                        </div>
+                        <div class="col-sm-8">
+                            <i class="flaticon-location73"></i>
+                            <!-- editable field -->
+                            <label for="address" class="title">Address: </label>
+                            <span id="address" editable-text="property.address" ng-show="!propertyForm.$visible" e-name="address" e-required>{{ property.address || '--unknown--' }}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="panel-footer" style="margin-top: 20px;">
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.wifi == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.wifi == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="wifi" editable-checkbox="property.wifi" e-ng-true-value="1" e-ng-false-value="0" e-title="">Wi-Fi</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.air_conditioning == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.air_conditioning == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="air_conditioning" editable-checkbox="property.air_conditioning" e-ng-true-value="1" e-ng-false-value="0" e-title="">Air-conditioning</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.cable == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.cable == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="cable" editable-checkbox="property.cable" e-ng-true-value="1" e-ng-false-value="0" e-title="">Cable TV</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.satellite == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.satellite == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="satellite" editable-checkbox="property.satellite" e-ng-true-value="1" e-ng-false-value="0" e-title="">Satellite TV</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.elevator == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.elevator == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="elevator" editable-checkbox="property.elevator" e-ng-true-value="1" e-ng-false-value="0" e-title="">Elevator</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.laundry == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.laundry == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="laundry" editable-checkbox="property.laundry" e-ng-true-value="1" e-ng-false-value="0" e-title="">Laundry room</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.gym == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.gym == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="gym" editable-checkbox="property.gym" e-ng-true-value="1" e-ng-false-value="0" e-title="">Gym</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.doorman == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.doorman == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="doorman" editable-checkbox="property.doorman" e-ng-true-value="1" e-ng-false-value="0" e-title="">Doorman</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.pets == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.pets == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="pets" editable-checkbox="property.pets" e-ng-true-value="1" e-ng-false-value="0" e-title="">Pets allowed</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="flaticon-circle108" ng-show="!propertyForm.$visible && (property.private_bathroom == 1)"></i>
+                                <i class="flaticon-cross108" ng-show="!propertyForm.$visible && (property.private_bathroom == 0)"></i>
+                                <!-- editable checkbox -->
+                                <span id="private_bathroom" editable-checkbox="property.private_bathroom" e-ng-true-value="1" e-ng-false-value="0" e-title="">Private bathroom</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="propertyDescription" class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2">Description:</div>
+                        <div id="description" class="col-sm-6">
+                            <!-- editable field -->
+                            <span editable-textarea="property.description" e-rows="7" e-cols="40" ng-show="!propertyForm.$visible" e-name="description">{{ property.description || '--unknown--' }}</span>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+
+
+                    <div class="buttons" style="margin-top: 20px;">
+                        <!-- buttons to submit / cancel form -->
+                            <span ng-show="propertyForm.$visible">
+                                <button type="submit" class="btn btn-primary" ng-disabled="propertyForm.$waiting">
+                                    Save
+                                </button>
+                                <button type="button" class="btn btn-default" ng-disabled="propertyForm.$waiting" ng-click="propertyForm.$cancel()">
+                                    Cancel
+                                </button>
+                            </span>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- PROPERTY PHOTOS -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 style="display: inline-block">Property Photos</h4>
+
+
+            <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == property.user_id">
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#propertyPhotoUpload">
+                    <i class="fa fa-arrow-circle-up fw"></i>
+                    Upload new photo
+                </button>
+            </span>
+
+        </div>
+
+        <div class="panel-body">
+
+            <h3 ng-show="photos.length == 0">No uploaded photos yet</h3>
+
+            <!-- PHOTO GALLERY -->
+            <div id="final-tg" class="row">
+                <div style="padding: 5px" class="col-sm-4" ng-repeat="photo in photos">
+                    <a data-lightbox="gallery" data-title="{{ photo.caption }}" href="{{ photo.location }}">
+                        <img style="display: block; margin-left: auto; margin-right: auto;" class="img-thumbnail img-responsive" src="{{ photo.thumb_location }}" data-src="{{ photo.thumb_location }}" />
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="panel-footer" style="margin-top: 20px;">
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- COMMENTS -->
+<div class="container" ng-controller="CommentController">
+
+    <!-- COMMENTS LIST-->
+    <div class="row">
+
+        <div class="col-sm-1"></div>
+        <div class="panel-group col-sm-10" style="margin-top: 40px">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 style="display: inline-block">Comments</h4>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="panel panel-default" style="margin-left: 15px; margin-right: 15px">
+
+                            <h3 ng-show="authenticated">Leave a comment</h3>
+                            <h3 ng-show="!authenticated">Login to leave a comment</h3>
+
+                            <form role="form" ng-show="authenticated">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="content" placeholder="Enter your comment here..." ng-model="newComment" required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-success" ng-click="createAndSaveComment()">Post</button>
+                            </form>
+
+                        </div>
+
+
+                        <div class="panel panel-default comment-box" ng-repeat="comment in comments">
+                            <div class="panel-heading">
+                                <h4 style="display: inline-block">
+                                    {{ comment.user.name }} <br />
+                                    <small>{{ comment.created_at | amDateFormat: 'MMM D, YYYY' }} at {{ comment.created_at | amDateFormat: 'HH:mm' }}</small>
+                                </h4>
+
+                                <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == comment.from_user">
+                                    <!-- button to show form -->
+                                    <button type="button" class="btn btn-warning delete" ng-click="deleteComment(comment.id)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div class="panel-body">
+                                <article>
+                                    <p>{{ comment.body }}</p>
+                                </article>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-footer" style="margin-top: 20px;">
+
+                        </div>
+
+                        <!-- PAGINATION -->
+                        <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.perPage" ng-model="pagination.currentPage" ng-change="getAllComments()" rotate="true" force-ellipses="true" boundary-link-numbers="true"></uib-pagination>
+
+                    </div>
+                </div>
+
+        </div>
+        <div class="col-sm-1"></div>
+
+    </div>
+
+</div>

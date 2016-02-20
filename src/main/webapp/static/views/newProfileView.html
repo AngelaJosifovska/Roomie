@@ -1,0 +1,332 @@
+<style>
+    span.rz-pointer {
+        background-color: #DF691A;
+    }
+    rzslider .rz-pointer.rz-active:after {
+        background-color: white;
+    }
+    span.rz-bubble, span.rz-bubble.rz-limit {
+        color: white;
+    }
+    rzslider .rz-bar.rz-selection {
+        background-color: #b45a1a;
+    }
+    rzslider .tick.ng-scope.selected {
+        background-color: #b45a1a;
+    }
+</style>
+
+<!-- PERSONAL INFORMATION PROFILE -->
+<div class="container" ng-show="currentUser.registration_status == 'personal'" ng-controller="PersonalProfileController" novalidate>
+    <h3>Complete your profile on Roomie</h3>
+
+    <div class="panel-group" style="margin-top: 40px; clear: both">
+        <form name="profileForm" ng-submit="createProfile()">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="display: inline-block">Personal Information</h4>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group" ng-class="{ 'has-error': profileForm.first_name.$invalid && !profileForm.first_name.$pristine && profileForm.first_name.$touched }">
+                                <i class="flaticon-user168"></i>
+                                <label for="first_name" class="title">First name: </label> <br />
+                                <input class="form-control" type="text" id="first_name" name="first_name" ng-model="profile.first_name" required />
+                                <p ng-show="profileForm.first_name.$invalid && !profileForm.first_name.$pristine && profileForm.first_name.$touched" class="text-danger"><small>Please enter your first name.</small></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-college1"></i>
+                                <label for="education" class="title">Education: </label> <br />
+                                <input class="form-control" type="text" id="education" name="education" ng-model="profile.education" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group" ng-class="{ 'has-error': profileForm.hometown.$invalid && !profileForm.hometown.$pristine && profileForm.hometown.$touched }">
+                                <i class="flaticon-home78"></i>
+                                <label for="hometown" class="title">Hometown: </label> <br />
+                                <input class="form-control" type="text" id="hometown" name="hometown" ng-model="profile.hometown" required />
+                                <p ng-show="profileForm.hometown.$invalid && !profileForm.hometown.$pristine && profileForm.hometown.$touched" class="text-danger"><small>Please enter your hometown.</small></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group" ng-class="{ 'has-error': profileForm.last_name.$invalid && !profileForm.last_name.$pristine && profileForm.last_name.$touched }">
+                                <i class="flaticon-user168"></i>
+                                <label for="last_name" class="title">Last name: </label> <br />
+                                <input class="form-control" type="text" id="last_name" name="last_name" ng-model="profile.last_name" required />
+                                <p ng-show="profileForm.last_name.$invalid && !profileForm.last_name.$pristine && profileForm.last_name.$touched" class="text-danger"><small>Please enter your last name.</small></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-career1"></i>
+                                <label for="occupation" class="title">Occupation: </label> <br />
+                                <input class="form-control" type="text" id="occupation" name="occupation" ng-model="profile.occupation" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-location54"></i>
+                                <label for="location" class="title">Location: </label> <br />
+                                <input class="form-control" type="text" id="location" name="location" ng-model="profile.location" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-united8"></i>
+                                <label style="margin-left: 3px" for="gender" class="title">Gender: </label> <br />
+                                <select class="form-control" name="gender" id="gender" ng-init="profile.gender = sexes[0].value"  ng-model="profile.gender">
+                                    <option ng-repeat="s in sexes" value="{{ s.value }}">{{ s.text }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-archive135"></i>
+                                <label for="workplace" class="title">Workplace: </label> <br />
+                                <input class="form-control" type="text" id="workplace" name="workplace" ng-model="profile.workplace" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-heart288"></i>
+                                <label for="relationship_status" class="title">Relationship status: </label> <br />
+                                <select class="form-control" name="relationship_status" id="relationship_status" ng-init="profile.relationship_status = statuses[0].value" ng-model="profile.relationship_status">
+                                    <option ng-repeat="s in statuses" value="{{ s.value }}">{{ s.text }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer" style="margin-top: 20px;">
+                        <div class="row">
+                            <div class="col-sm-2">More about me!</div>
+                            <div class="col-sm-7">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="description" id="description" ng-model="profile.description" rows="7" cols="40"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </div>
+
+                    <div class="buttons" style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary" ng-disabled="profileForm.$invalid">Save changes</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- ROOMMATE INFORMATION PROFILE -->
+<div class="container" ng-show="currentUser.registration_status == 'roommate'" ng-controller="RoommateProfileController" ng-controller="RoommateProfileController" novalidate>
+    <h3>Complete your profile on Roomie</h3>
+
+    <div class="panel-group" style="margin-top: 40px; clear: both">
+        <form name="profileForm" ng-submit="createProfile()">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="display: inline-block">Roommate Information</h4>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-magnifyingglass29"></i>
+                                <label style="margin-left: 3px" for="relationship_status" class="title">Looking for: </label> <br />
+                                <select class="form-control" name="looking_for" id="looking_for" ng-init="profile.looking_for = goals[0].value" ng-model="profile.looking_for">
+                                    <option ng-repeat="g in goals" value="{{ g.value }}">{{ g.text }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-archive135"></i>
+                                <label for="lease_length" class="title">Lease length (in months): </label> <br />
+                                <input class="form-control" type="number" min="1" step="1" id="lease_length" name="lease_length" ng-init="profile.lease_length = 1" ng-model="profile.lease_length" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <i class="flaticon-money132"></i>
+                                <label style="margin-left: 3px" class="title">Monthly budget: </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <i class="flaticon-logistics3"></i>
+                                <label style="margin-left: 3px" for="move_in_from" class="title">Move in from: </label> <br />
+                                <input type="text" id="move_in_from" name="move_in_from" uib-datepicker-popup="dd/MM/yyyy" ng-model="profile.move_in_from" min-date="datePicker.minDate" is-open="datePicker.isOpen"
+                                       ng-class="{ 'has-error': profileForm.move_in_from.$invalid && !profileForm.move_in_from.$pristine && profileForm.move_in_from.$touched }" required />
+                                <p ng-show="profileForm.move_in_from.$invalid && !profileForm.move_in_from.$pristine && profileForm.move_in_from.$touched" class="text-danger"><small>Please choose a valid date.</small></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-default" ng-click="openPopUp()">
+                                <i class="fa fa-calendar fw"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="monthly_budget_lower_limit" class="title">From: </label> <br />
+                                <input class="form-control" type="number" min="100" step="10" id="monthly_budget_lower_limit" name="monthly_budget_lower_limit" ng-init="profile.monthly_budget_lower_limit = 100" ng-model="profile.monthly_budget_lower_limit" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="monthly_budget_upper_limit" class="title">To: </label> <br />
+                                <input class="form-control" type="number" min="100" step="10" id="monthly_budget_upper_limit" name="monthly_budget_upper_limit" ng-init="profile.monthly_budget_upper_limit = 100" ng-model="profile.monthly_budget_upper_limit" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer" style="margin-top: 20px;">
+
+                        <div class="row">
+                            <div class="col-sm-2"><label>Messy</label></div>
+                            <div class="col-sm-2 text-right"><label>Neat</label></div>
+
+                            <div class="col-sm-2"><label>Home all day</label></div>
+                            <div class="col-sm-2 text-right"><label>Workaholic</label></div>
+
+                            <div class="col-sm-2"><label>Early to bed</label></div>
+                            <div class="col-sm-2 text-right"><label>Never sleep</label></div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.cleanliness" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.work_schedule" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.sleep_schedule" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin: 15px 0px"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2"><label>Non-smoker</label></div>
+                            <div class="col-sm-2 text-right"><label>Addicted</label></div>
+
+                            <div class="col-sm-2"><label>Never drink</label></div>
+                            <div class="col-sm-2 text-right"><label>All the time</label></div>
+
+                            <div class="col-sm-2"><label>Eating out</label></div>
+                            <div class="col-sm-2 text-right"><label>First class chef</label></div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.smoking" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.drinking" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.eating_habits" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin: 15px 0px"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2"><label>Very strict</label></div>
+                            <div class="col-sm-2 text-right"><label>Share everything</label></div>
+
+                            <div class="col-sm-2"><label>Lone wolf</label></div>
+                            <div class="col-sm-2 text-right"><label>Party animal</label></div>
+
+                            <div class="col-sm-2"><label>I hate animals</label></div>
+                            <div class="col-sm-2 text-right"><label>Animal person</label></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.privacy" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.guests" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                            <div class="col-sm-4">
+                                <rzslider rz-slider-model="profile.pets" rz-slider-options="{ floor: minValue, ceil: maxValue, step: 1, showSelectionBar: true, showTicks: true }"></rzslider>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12"><br /></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2">
+                                <i class="flaticon-golf22"></i>
+                                <label for="hobbies" class="title">Hobbies:</label>
+                            </div>
+
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-2">
+                                <i class="flaticon-weightlifting4"></i>
+                                <label for="exercise" class="title">Exercise:</label>
+                            </div>
+
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="hobbies" id="hobbies" ng-model="profile.hobbies" rows="3" cols="50"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="exercise" id="exercise" ng-model="profile.exercise" rows="3" cols="50"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="buttons" style="margin-top: 20px;">
+                        <!-- button to submit form -->
+                        <button type="submit" class="btn btn-primary" ng-disabled="profileForm.$invalid">Save changes</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
