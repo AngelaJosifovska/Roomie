@@ -3,12 +3,17 @@ package mk.ukim.finki.roomie.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import mk.ukim.finki.roomie.model.User;
+import mk.ukim.finki.roomie.service.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+/*
 class User {
 	public String text;
 
@@ -17,10 +22,14 @@ class User {
 		this.text = text;
 	}
 }
+*/
 
 @RestController
 @RequestMapping(value = "public/api/User")
 public class UserController {
+	
+	@Autowired
+	UserService userService;
 	
 	/**
 	 * Display a listing of the resources
@@ -29,9 +38,8 @@ public class UserController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public @ResponseBody List<User> index() {
-		User unit = new User("All users");
-		List<User> list = new ArrayList<User>();
-		list.add(unit);
+		//User unit = new User("All users");
+		List<User> list = userService.getAllUsers();
 		return list;
 	}
 	
@@ -41,9 +49,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody User store() {
-		User unit = new User("New user");
-		return unit;
+	public @ResponseBody User store(@RequestBody User user) {
+		System.out.println(user.getName()+" "+user.getPassword());
+		return userService.storeUser(user);
 	}
 	
 	/**
@@ -54,8 +62,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody User show(@PathVariable long id) {
-		User unit = new User("User number: " + id);
-		return unit;
+		return userService.getUserById(id);
 	}
 	
 	/**
@@ -65,9 +72,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody User update(@PathVariable long id) {
-		User unit = new User("Updated user: " + id);
-		return unit;
+	public @ResponseBody User update(@PathVariable long id, @RequestBody User user) {
+		return userService.updateUser(user);
 	}
 
 }

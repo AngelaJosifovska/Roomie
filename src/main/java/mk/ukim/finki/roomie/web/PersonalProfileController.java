@@ -3,6 +3,8 @@ package mk.ukim.finki.roomie.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import mk.ukim.finki.roomie.model.User;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
