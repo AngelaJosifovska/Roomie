@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-class User {
+class UserTmp {
 	public String text;
 
-	public User(String text) {
+	public UserTmp(String text) {
 		super();
 		this.text = text;
 	}
@@ -28,9 +28,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody List<User> index() {
-		User unit = new User("All users");
-		List<User> list = new ArrayList<User>();
+	public @ResponseBody List<UserTmp> index() {
+		UserTmp unit = new UserTmp("All users");
+		List<UserTmp> list = new ArrayList<UserTmp>();
 		list.add(unit);
 		return list;
 	}
@@ -41,8 +41,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody User store() {
-		User unit = new User("New user");
+	public @ResponseBody UserTmp store() {
+		UserTmp unit = new UserTmp("New user");
 		return unit;
 	}
 	
@@ -53,8 +53,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody User show(@PathVariable long id) {
-		User unit = new User("User number: " + id);
+	public @ResponseBody UserTmp show(@PathVariable long id) {
+		UserTmp unit = new UserTmp("User number: " + id);
 		return unit;
 	}
 	
@@ -65,8 +65,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody User update(@PathVariable long id) {
-		User unit = new User("Updated user: " + id);
+	public @ResponseBody UserTmp update(@PathVariable long id) {
+		UserTmp unit = new UserTmp("Updated user: " + id);
 		return unit;
 	}
 

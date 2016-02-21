@@ -3,6 +3,10 @@ package mk.ukim.finki.roomie.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import mk.ukim.finki.roomie.model.User;
+import mk.ukim.finki.roomie.service.implementation.PersonalProfileServiceImplementation;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,15 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "public/api/PersonalProfile")
 public class PersonalProfileController {
 	
+	@Autowired
+	private PersonalProfileServiceImplementation personalProfileService;
+	
 	/**
 	 * Display a listing of the resources
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody List<User> index() {
-		User unit = new User("All users");
-		List<User> list = new ArrayList<User>();
+	public @ResponseBody List<UserTmp> index() {
+		UserTmp unit = new UserTmp("All users");
+		List<UserTmp> list = new ArrayList<UserTmp>();
 		list.add(unit);
 		return list;
 	}
@@ -32,8 +39,8 @@ public class PersonalProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody User store() {
-		User unit = new User("New user");
+	public @ResponseBody UserTmp store() {
+		UserTmp unit = new UserTmp("New user");
 		return unit;
 	}
 	
@@ -44,9 +51,10 @@ public class PersonalProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody User show(@PathVariable long id) {
-		User unit = new User("User number: " + id);
-		return unit;
+	public @ResponseBody User show(@PathVariable int id) {
+//		User unit = new User("User number: " + id);
+//		return unit;'
+		return this.personalProfileService.getSinglePersonalProfile(id);
 	}
 	
 	/**
@@ -56,8 +64,8 @@ public class PersonalProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody User update(@PathVariable long id) {
-		User unit = new User("Updated user: " + id);
+	public @ResponseBody UserTmp update(@PathVariable long id) {
+		UserTmp unit = new UserTmp("Updated user: " + id);
 		return unit;
 	}
 
