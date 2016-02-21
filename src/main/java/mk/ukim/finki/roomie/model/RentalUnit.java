@@ -36,31 +36,72 @@ public class RentalUnit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	
+	@Column(nullable = false)
 	private String type;	
+	
+	@Column(nullable = false)
 	private Integer rent;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
 	private Date move_in_from;
+	
+	@Column(nullable = false)
 	private Integer lease_length;
+	
+	@Column(nullable = false)
 	private String address;
+	
+	@Column(nullable = false)
 	private String city;
 	
 	@Column(name="class",nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Class mclass;
 	
+	@Column(columnDefinition = "default NULL", length = 1000)
 	private String description;
+	
+	@Column(columnDefinition = "default NULL")
 	private Integer num_bedrooms;
+	
+	@Column(columnDefinition = "default NULL")
 	private Integer num_bathrooms;
+	
+	@Column(nullable = false)
 	private String furniture;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean pets;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean private_bathroom;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean wifi;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean air_conditioning;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean cable;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean satellite;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean elevator;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean laundry;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean gym;
+	
+	@Column(nullable = false, columnDefinition = "default false")
 	private boolean doorman;
+	
+	@Column(nullable = false, columnDefinition = "default true")
 	private boolean property_active;
 
 	@Temporal(TemporalType.TIMESTAMP)
