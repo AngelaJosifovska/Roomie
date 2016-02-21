@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mk.ukim.finki.roomie.model.RentalUnit;
+import mk.ukim.finki.roomie.model.User;
 import mk.ukim.finki.roomie.service.RentalUnitService;
+import mk.ukim.finki.roomie.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +24,8 @@ public class RentalUnitController {
 	
 	@Autowired
 	RentalUnitService rentalUnitService;
+	@Autowired
+	UserService userService;
 	
 	/**
 	 * Display a listing of the resources
@@ -38,8 +43,9 @@ public class RentalUnitController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody RentalUnit store(@RequestBody RentalUnit rentalUnit) {
-		System.out.println(rentalUnit.getUser());
+	public @ResponseBody RentalUnit store(@RequestParam long user_id,@RequestBody RentalUnit rentalUnit) {
+		User user=userService.getUserById(user_id);
+		rentalUnit.setUser(user);
 		return rentalUnitService.storeRentalUnit(rentalUnit);
 	}
 	
@@ -61,7 +67,9 @@ public class RentalUnitController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody RentalUnit update(@PathVariable long id,@RequestBody RentalUnit rentalUnit) {
+	public @ResponseBody RentalUnit update(@PathVariable long id,@RequestParam long user_id,@RequestBody RentalUnit rentalUnit) {
+		User user=userService.getUserById(user_id);
+		rentalUnit.setUser(user);
 		return rentalUnitService.updateRentalUnit(rentalUnit);
 	}
 

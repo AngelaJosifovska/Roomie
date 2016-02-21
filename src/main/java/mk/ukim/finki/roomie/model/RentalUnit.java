@@ -81,6 +81,7 @@ public class RentalUnit {
 		this.updated_at = new Date();
 	}
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
@@ -243,9 +244,11 @@ public class RentalUnit {
 		String formated = format.format(updated_at);
 		return formated;
 	}
+	@JsonProperty
 	public User getUser() {
 		return user;
 	}
+	@JsonIgnore
 	public void setUser(User user) {
 		this.user = user;
 	}
