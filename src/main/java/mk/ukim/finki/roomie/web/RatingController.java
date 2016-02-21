@@ -24,25 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "public/api/RentalUnit")
-public class CommentController {
+public class RatingController {
 	
 	@Autowired
-	CommentService commentService;
+	RatingService ratingService;
 	@Autowired
 	RentalUnitService rentalUnitService;
 	@Autowired
 	UserService userService;
-	@Autowired
-	RatingService ratingService;
 	
 	/**
 	 * Display a listing of the resources
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Comment", method = RequestMethod.GET)
-	public @ResponseBody List<Comment> index(@PathVariable long property_id) {
-		return commentService.getAllComments(property_id);
+	@RequestMapping(value = "/{property_id}/Rating", method = RequestMethod.GET)
+	public @ResponseBody List<Rating> index(@PathVariable long property_id) {
+		return ratingService.getAllRatings(property_id);
 	}
 	
 	/**
@@ -50,16 +48,16 @@ public class CommentController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Comment", method = RequestMethod.POST)
-	public @ResponseBody Comment store(@PathVariable long property_id, @RequestBody Comment comment,@RequestParam Long user_id) {
+	@RequestMapping(value = "/{property_id}/Rating", method = RequestMethod.POST)
+	public @ResponseBody Rating store(@PathVariable long property_id, @RequestBody Rating rating,@RequestParam Long user_id) {
 		
 		RentalUnit property=rentalUnitService.getRentalUnitById(property_id);		
-		comment.setRentalUnit(property);
+		rating.setRentalUnit(property);
 		
 		User user=userService.getUserById(user_id);
-		comment.setUser(user);
+		rating.setUser(user);
 		
-		return commentService.storeComment(comment);		
+		return ratingService.storeRating(rating);	
 		
 	}
 	
@@ -69,9 +67,9 @@ public class CommentController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Comment/{id}", method = RequestMethod.GET)
-	public @ResponseBody Comment show(@PathVariable long property_id, @PathVariable long id) {
-		return commentService.getCommentById(id);
+	@RequestMapping(value = "/{property_id}/Rating/{id}", method = RequestMethod.GET)
+	public @ResponseBody Rating show(@PathVariable long property_id, @PathVariable long id) {
+		return ratingService.getRatingById(id);
 	}
 	
 	/**
@@ -80,21 +78,12 @@ public class CommentController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Comment/{id}", method = RequestMethod.PUT)
-	public @ResponseBody Comment update(@PathVariable long property_id, @PathVariable long id, @RequestBody Comment comment) {
-	    Comment old=commentService.getCommentById(id);
-	    old.setBody(comment.getBody());
-		return commentService.updateComment(old);
+	@RequestMapping(value = "/{property_id}/Rating/{id}", method = RequestMethod.PUT)
+	public @ResponseBody Rating update(@PathVariable long property_id, @PathVariable long id, @RequestBody Rating rating) {
+	    Rating old=ratingService.getRatingById(id);
+	    old.setRating_points(rating.getRating_points());
+	    old.setBody(rating.getBody());
+		return ratingService.updateRating(old);
 	}
-	/**
-	 * Delete the specified resource.
-	 * 
-	 * @param id
-	 */
-
-	@RequestMapping(value = "/{property_id}/Comment/{id}", method = RequestMethod.DELETE)
-	  public void delete(@PathVariable long property_id, @PathVariable Long id) {
-	    commentService.deleteComment(id);
-	  }
 	
 }
