@@ -1,5 +1,5 @@
 package mk.ukim.finki.roomie.model;
- 
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,16 +19,17 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
  
 enum RegistrationStatus {
-    personal,
-    roommate,
-    complete
+	personal,
+	roommate,
+	complete
 }
 
 enum Role {
-    admin,
-    user
+	admin,
+	user
 }
  
 @Entity
@@ -45,30 +46,30 @@ public class User {
     private String email;
    
     @JsonIgnore
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String password;
    
-    @Column(nullable=false,columnDefinition = "default 'user'")
+    @Column(nullable=false, columnDefinition = "default 'user'")
     @Enumerated(EnumType.STRING)
-    private Role role;
+	private Role role = Role.user;
    
-    @Column(nullable=false,columnDefinition = "default 1")
-    private Integer profile_active;
+	@Column(nullable=false,columnDefinition = "default true")
+	private boolean profile_active = true;
    
     @JsonIgnore
     @Column(nullable=true,columnDefinition = "default NULL")
-    private String remember_token;
+	private String remember_token = null;
    
     @Column(nullable=false,columnDefinition = "default 'personal'")
     @Enumerated(EnumType.STRING)
-    private RegistrationStatus registration_status;
+	private RegistrationStatus registration_status = RegistrationStatus.personal;
    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, insertable=true, updatable=false, columnDefinition = "default CURRENT_TIMESTAMP")
     private Date created_at;
    
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, insertable=false, updatable=true, columnDefinition = "default CURRENT_TIMESTAMP")
+    @Column(nullable = false, insertable=true, updatable=true, columnDefinition = "default CURRENT_TIMESTAMP")
     private Date updated_at;
     
     @JsonBackReference
@@ -83,6 +84,7 @@ public class User {
     void onCreate(){
 //        this.created_at = new Timestamp(new Date().getTime());
     	this.created_at = new Date();
+    	this.updated_at = new Date();
     }
     
     @PreUpdate
@@ -126,10 +128,12 @@ public class User {
         this.email = email;
     }
     
+	@JsonIgnore
     public String getPassword() {
         return password;
     }
     
+	@JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
@@ -142,18 +146,20 @@ public class User {
         this.role = role;
     }
     
-    public Integer getProfile_active() {
+    public boolean getProfile_active() {
         return profile_active;
     }
     
-    public void setProfile_active(Integer profile_active) {
+    public void setProfile_active(boolean profile_active) {
         this.profile_active = profile_active;
     }
     
+	@JsonIgnore
     public String getRemember_token() {
         return remember_token;
     }
     
+	@JsonProperty
     public void setRemember_token(String remember_token) {
         this.remember_token = remember_token;
     }
@@ -167,6 +173,9 @@ public class User {
     }
     
     public Date getCreated_at() {
+//    	SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String formated = format.format(created_at);
+//		return formated;
         return created_at;
     }
     
@@ -175,6 +184,9 @@ public class User {
     }
     
     public Date getUpdated_at() {
+//    	SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String formated = format.format(updated_at);
+//		return formated;
         return updated_at;
     }
     
@@ -198,4 +210,13 @@ public class User {
 		this.personal_profile = personal_profile;
 	}
    
+   	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email
+				+ ", password=" + password + ", role=" + role
+				+ ", profile_active=" + profile_active + ", remember_token="
+				+ remember_token + ", registration_status="
+				+ registration_status + ", created_at=" + created_at
+				+ ", updated_at=" + updated_at + "]";
+	}
 }

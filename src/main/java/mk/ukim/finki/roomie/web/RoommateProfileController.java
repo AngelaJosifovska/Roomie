@@ -7,6 +7,10 @@ import mk.ukim.finki.roomie.model.RoommateProfile;
 import mk.ukim.finki.roomie.service.RoommateProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import mk.ukim.finki.roomie.model.User;
+
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,9 +30,10 @@ public class RoommateProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody List<UserTmp> index() {
-		UserTmp unit = new UserTmp("All users");
-		List<UserTmp> list = new ArrayList<UserTmp>();
+	public @ResponseBody List<User> index() {
+		// TODO: Implement the method if necessary
+		User unit = new User();
+		List<User> list = new ArrayList<User>();
 		list.add(unit);
 		return list;
 	}
@@ -39,8 +44,9 @@ public class RoommateProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody UserTmp store() {
-		UserTmp unit = new UserTmp("New user");
+	public @ResponseBody User store() {
+		// TODO: Implement the method: @RequestBody for User in the method parameters
+		User unit = new User();
 		return unit;
 	}
 	
@@ -52,8 +58,6 @@ public class RoommateProfileController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody RoommateProfile show(@PathVariable int id) {
-//		User unit = new User("User number: " + id);
-//		return unit;
 		return this.roommateProfileService.getSingleRoommateProfile(id);
 	}
 	
@@ -64,8 +68,9 @@ public class RoommateProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody UserTmp update(@PathVariable int id) {
-		UserTmp unit = new UserTmp("Updated user: " + id);
+	public @ResponseBody User update(@PathVariable int id) {
+		// TODO: Implement the method: @RequestBody for User in the method parameters
+		User unit = new User();
 		return unit;
 	}
 }

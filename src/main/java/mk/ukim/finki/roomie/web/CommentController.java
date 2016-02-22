@@ -1,37 +1,46 @@
 package mk.ukim.finki.roomie.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import mk.ukim.finki.roomie.model.Comment;
+import mk.ukim.finki.roomie.model.RentalUnit;
+import mk.ukim.finki.roomie.model.User;
+import mk.ukim.finki.roomie.service.CommentService;
+import mk.ukim.finki.roomie.service.RatingService;
+import mk.ukim.finki.roomie.service.RentalUnitService;
+import mk.ukim.finki.roomie.service.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-class Comment {
-	public String text;
-
-	public Comment(String text) {
-		super();
-		this.text = text;
-	}
-}
 
 @RestController
 @RequestMapping(value = "public/api/RentalUnit")
 public class CommentController {
+	
+	@Autowired
+	CommentService commentService;
+	@Autowired
+	RentalUnitService rentalUnitService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	RatingService ratingService;
+	
 	/**
 	 * Display a listing of the resources
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/{property_id}/Comment", method = RequestMethod.GET)
-	public @ResponseBody List<Comment> index(@PathVariable long property_id) {
-		Comment unit = new Comment("Rental unit: " + property_id + " -> Comments");
-		List<Comment> list = new ArrayList<Comment>();
-		list.add(unit);
-		return list;
+	public @ResponseBody List<Comment> index(@PathVariable int property_id) {
+		return commentService.getAllCommentsForRentalUnit(property_id);
 	}
 	
 	/**
@@ -40,9 +49,16 @@ public class CommentController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{property_id}/Comment", method = RequestMethod.POST)
-	public @ResponseBody Comment store(@PathVariable long property_id) {
-		Comment unit = new Comment("New comment for: " + property_id);
-		return unit;
+	public @ResponseBody Comment store(@PathVariable int property_id, @RequestBody Comment comment, @RequestParam int user_id) {
+		
+		RentalUnit property=rentalUnitService.getRentalUnitById(property_id);		
+		comment.setRentalUnit(property);
+		
+		User user=userService.getUserById(user_id);
+		comment.setUser(user);
+		
+		return commentService.storeComment(comment);		
+		
 	}
 	
 	/**
@@ -52,9 +68,8 @@ public class CommentController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{property_id}/Comment/{id}", method = RequestMethod.GET)
-	public @ResponseBody Comment show(@PathVariable long property_id, @PathVariable long id) {
-		Comment unit = new Comment("Rental unit number: " + property_id + " -> Comment number: " + id);
-		return unit;
+	public @ResponseBody Comment show(@PathVariable int property_id, @PathVariable int id) {
+		return commentService.getCommentByRentalUnitID(id);
 	}
 	
 	/**
@@ -64,9 +79,20 @@ public class CommentController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{property_id}/Comment/{id}", method = RequestMethod.PUT)
-	public @ResponseBody Comment update(@PathVariable long property_id, @PathVariable long id) {
-		Comment unit = new Comment("Updated comment: " + id + " on property " + property_id);
-		return unit;
+	public @ResponseBody Comment update(@PathVariable int property_id, @PathVariable int id, @RequestBody Comment comment) {
+	    Comment old=commentService.getCommentByRentalUnitID(id);
+	    old.setBody(comment.getBody());
+		return commentService.updateComment(old);
 	}
-
+	
+	/**
+	 * Delete the specified resource.
+	 * 
+	 * @param id
+	 */
+	@RequestMapping(value = "/{property_id}/Comment/{id}", method = RequestMethod.DELETE)
+	  public void delete(@PathVariable int property_id, @PathVariable int id) {
+	    commentService.deleteComment(id);
+	  }
+	
 }

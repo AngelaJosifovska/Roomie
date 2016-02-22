@@ -26,9 +26,10 @@ public class PersonalProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody List<UserTmp> index() {
-		UserTmp unit = new UserTmp("All users");
-		List<UserTmp> list = new ArrayList<UserTmp>();
+	public @ResponseBody List<User> index() {
+		// TODO: Implement the method if necessary
+		User unit = new User();
+		List<User> list = new ArrayList<User>();
 		list.add(unit);
 		return list;
 	}
@@ -39,8 +40,9 @@ public class PersonalProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody UserTmp store() {
-		UserTmp unit = new UserTmp("New user");
+	public @ResponseBody User store() {
+		// TODO: Implement the method: @RequestBody for User in the method parameters
+		User unit = new User();
 		return unit;
 	}
 	
@@ -52,8 +54,6 @@ public class PersonalProfileController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody User show(@PathVariable int id) {
-//		User unit = new User("User number: " + id);
-//		return unit;'
 		return this.personalProfileService.getSinglePersonalProfile(id);
 	}
 	
@@ -64,9 +64,9 @@ public class PersonalProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody UserTmp update(@PathVariable long id) {
-		UserTmp unit = new UserTmp("Updated user: " + id);
-		return unit;
+	public @ResponseBody User update(@PathVariable int id) {
+		// TODO: Implement the method: @RequestBody for User in the method parameters
+		return new User();
 	}
 
 }
