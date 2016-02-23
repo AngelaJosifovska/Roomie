@@ -8,7 +8,7 @@ roomie.factory('ProfileService', function($http, $rootScope) {
 
         getAllFullUserProfiles: function(page_number) {
             return $http({
-                url: 'api/User?page=' + page_number,
+                url: '/roomie/public/api/User?page=' + page_number,
                 method: "GET"
             });
         },
@@ -16,14 +16,14 @@ roomie.factory('ProfileService', function($http, $rootScope) {
 
         getMyPersonalProfile: function(user_id) {
             return $http({
-                url: 'api/PersonalProfile/' + user_id,
+                url: '/roomie/public/api/PersonalProfile/' + user_id,
                 method: "GET"
             });
         },
 
         saveMyPersonalProfile: function(profileData) {
             return $http({
-                url: 'api/PersonalProfile/' + $rootScope.currentUser.id,
+                url: '/roomie/public/api/PersonalProfile/' + $rootScope.currentUser.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
@@ -33,7 +33,7 @@ roomie.factory('ProfileService', function($http, $rootScope) {
 
         createMyPersonalProfile: function(profileData) {
             return $http({
-                url: 'api/PersonalProfile',
+                url: '/roomie/public/api/PersonalProfile',
                 method: "POST",
                 // Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
@@ -44,7 +44,7 @@ roomie.factory('ProfileService', function($http, $rootScope) {
 
         getMyRoommateProfile: function(user_id) {
             return $http({
-                url: 'api/RoommateProfile/' + user_id,
+                url: '/roomie/public/api/RoommateProfile/' + user_id,
                 method: "GET"
             });
         },
@@ -52,7 +52,7 @@ roomie.factory('ProfileService', function($http, $rootScope) {
         saveMyRoommateProfile: function(profileData) {
             //alert(profileData.first_name);
             return $http({
-                url: 'api/RoommateProfile/' + $rootScope.currentUser.id,
+                url: '/roomie/public/api/RoommateProfile/' + $rootScope.currentUser.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
@@ -62,7 +62,7 @@ roomie.factory('ProfileService', function($http, $rootScope) {
 
         createMyRoommateProfile: function(profileData) {
             return $http({
-                url: 'api/RoommateProfile',
+                url: '/roomie/public/api/RoommateProfile',
                 method: "POST",
                 // Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
@@ -72,7 +72,7 @@ roomie.factory('ProfileService', function($http, $rootScope) {
 
         saveUser: function(userData) {
             return $http({
-                url: 'api/User/' + $rootScope.currentUser.id,
+                url: '/roomie/public/api/User/' + $rootScope.currentUser.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },

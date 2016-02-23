@@ -8,14 +8,14 @@ roomie.factory('RatingService', function($http) {
 
         getRating: function(property_id) {
             return $http({
-                url: 'api/RentalUnit/' + property_id + '/User',
+                url: '/roomie/public/api/RentalUnit/' + property_id + '/User',
                 method: "GET"
             });
         },
 
         getMyRating: function(property_id, user_id) {
             return $http({
-                url: 'api/RentalUnit/' + property_id + '/User/' + user_id,
+                url: '/roomie/public/api/RentalUnit/' + property_id + '/User/' + user_id,
                 method: "GET"
             });
         },
@@ -23,7 +23,7 @@ roomie.factory('RatingService', function($http) {
 
         saveRating: function(property_id, user_id, rating_obj) {
             return $http({
-                url: 'api/RentalUnit/' + property_id + '/User/' + user_id,
+                url: '/roomie/public/api/RentalUnit/' + property_id + '/User/' + user_id,
                 method: "PUT",
                 //Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },

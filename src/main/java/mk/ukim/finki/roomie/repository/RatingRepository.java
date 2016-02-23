@@ -1,7 +1,5 @@
 package mk.ukim.finki.roomie.repository;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -21,12 +19,12 @@ public class RatingRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public Rating getRatingById(Integer id){
+	public Rating getRatingByRentalUnitID(Integer rental_id){
 		 CriteriaBuilder cb = em.getCriteriaBuilder();
 		 CriteriaQuery<Rating> cq = cb.createQuery(Rating.class);
 		 final Root<Rating> root = cq.from(Rating.class);
 
-		 Predicate byId = cb.equal(root.get("id"), id);
+		 Predicate byId = cb.equal(root.get("rentalUnit"), rental_id);
 
 		 cq.where(byId);
 
@@ -35,16 +33,12 @@ public class RatingRepository {
 		 return query.getSingleResult();
 	}
 	
-	public List<Rating> findAll(Integer rental_id){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<Rating> cq = cb.createQuery(Rating.class);
-	    final Root<Rating> root = cq.from(Rating.class);
-
-	    cq.where(cb.equal(root.get("rentalUnit"), rental_id));
+	public Double getAverageRatingForRentalUnit(Integer rental_id){	    
+		String queryText = "SELECT AVG(rating_points) FROM Rating WHERE on_rental = (:rental_id)";
+	    TypedQuery<Double> query = em.createQuery(queryText, Double.class);
+	    query.setParameter("rental_id", rental_id);
 	    
-	    TypedQuery<Rating> query = em.createQuery(cq);
-
-	    return query.getResultList();
+	    return query.getSingleResult();
 	}
 	
 	@Transactional

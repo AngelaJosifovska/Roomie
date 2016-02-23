@@ -12,7 +12,7 @@ roomie.factory('RentalUnitService', function($http) {
         // page_number is useful for pagination
         getAll: function(page_number) {
             return $http({
-                url: 'api/RentalUnit?page=' + page_number,
+                url: '/roomie/public/api/RentalUnit?page=' + page_number,
                 method: "GET"
             });
         },
@@ -20,14 +20,14 @@ roomie.factory('RentalUnitService', function($http) {
         // get particular rental units
         getSingle: function(rental_unit) {
             return $http({
-                url: 'api/RentalUnit/' + rental_unit,
+                url: '/roomie/public/api/RentalUnit/' + rental_unit,
                 method: "GET"
             });
         },
 
         saveProperty: function(rental_unit) {
             return $http({
-                url: 'api/RentalUnit/' + rental_unit.id,
+                url: '/roomie/public/api/RentalUnit/' + rental_unit.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
@@ -37,7 +37,7 @@ roomie.factory('RentalUnitService', function($http) {
 
         createNewProperty: function(propertyData) {
             return $http({
-                url: 'api/RentalUnit',
+                url: '/roomie/public/api/RentalUnit',
                 method: "POST",
                 // Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },

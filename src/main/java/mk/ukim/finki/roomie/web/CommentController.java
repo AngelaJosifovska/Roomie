@@ -25,13 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
 	
 	@Autowired
-	CommentService commentService;
+	private CommentService commentService;
 	@Autowired
-	RentalUnitService rentalUnitService;
+	private RentalUnitService rentalUnitService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	RatingService ratingService;
+	private RatingService ratingService;
 	
 	/**
 	 * Display a listing of the resources
@@ -39,8 +39,10 @@ public class CommentController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{property_id}/Comment", method = RequestMethod.GET)
-	public @ResponseBody List<Comment> index(@PathVariable int property_id) {
-		return commentService.getAllCommentsForRentalUnit(property_id);
+	public @ResponseBody HelperResponseWrapper<Comment> index(@PathVariable int property_id) {
+		List<Comment> comments = commentService.getAllCommentsForRentalUnit(property_id);
+		HelperResponseWrapper<Comment> response = new HelperResponseWrapper<Comment>(comments);
+		return response;
 	}
 	
 	/**

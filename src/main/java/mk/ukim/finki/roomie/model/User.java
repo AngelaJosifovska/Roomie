@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -72,7 +71,7 @@ public class User {
     @Column(nullable = false, insertable=true, updatable=true, columnDefinition = "default CURRENT_TIMESTAMP")
     private Date updated_at;
     
-    @JsonBackReference
+    @JsonManagedReference
     @OneToOne(mappedBy = "for_user", targetEntity = RoommateProfile.class)
     private RoommateProfile roommate_profile;
     

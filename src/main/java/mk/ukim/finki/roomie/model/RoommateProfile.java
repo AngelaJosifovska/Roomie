@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "roommate_profiles")
@@ -25,7 +25,7 @@ public class RoommateProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
    
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToOne(optional = false, targetEntity = User.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "for_user", nullable = false, referencedColumnName = "id")
     private User for_user;

@@ -27,11 +27,7 @@ public class Rating {
 	private Integer id;	
 	
 	@Column(nullable=false)
-	private Integer rating_points;
-	
-	@Column(nullable=false)
-	private String body;
-	
+	private Integer rating_points;	
 	
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, insertable=true, updatable=false, columnDefinition = "default CURRENT_TIMESTAMP")
@@ -52,13 +48,12 @@ public class Rating {
 	@JoinColumn(name="on_rental")
 	private RentalUnit rentalUnit;
 	
-	
-	
 	@PrePersist
 	void onCreate(){
 		this.created_at = new Date();
 		this.updated_at = new Date();
 	}
+	
 	@PreUpdate
 	void onPersist(){
 		this.updated_at = new Date();
@@ -74,24 +69,22 @@ public class Rating {
 		String formated = format.format(created_at);
 		return formated;
 	}
+	
 	@JsonIgnore
 	public Date getCreated_at_Date() {
 		return created_at;
 	}
+	
 	public String getUpdated_at() {
 		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String formated = format.format(updated_at);
 		return formated;
 	}
-	public String getBody() {
-		return body;
-	}
-	public void setBody(String body) {
-		this.body = body;
-	}
+
 	public Integer getId() {
 		return id;
 	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -100,6 +93,7 @@ public class Rating {
 	public User getUser() {
 		return user;
 	}
+	
 	@JsonIgnore
 	public void setUser(User user) {
 		this.user = user;
@@ -114,9 +108,11 @@ public class Rating {
 	public RentalUnit getRentalUnit() {
 		return rentalUnit;
 	}
+	
 	public Integer getRating_points() {
 		return rating_points;
 	}
+	
 	public void setRating_points(Integer rating_points) {
 		this.rating_points = rating_points;
 	}

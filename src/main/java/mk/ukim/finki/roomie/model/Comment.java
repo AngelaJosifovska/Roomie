@@ -107,7 +107,7 @@ public class Comment {
 		this.rentalUnit = rentalUnit;
 	}
 		
-	@JsonProperty
+	@JsonIgnore
 	public RentalUnit getRentalUnit() {
 		return rentalUnit;
 	}

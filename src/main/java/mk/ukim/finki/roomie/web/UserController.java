@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	/**
 	 * Display a listing of the resources
@@ -26,10 +26,10 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody List<User> index() {
-		//User unit = new User("All users");
+	public @ResponseBody HelperResponseWrapper<User> index() {
 		List<User> list = userService.getAllUsers();
-		return list;
+		HelperResponseWrapper<User> response = new HelperResponseWrapper<User>(list);
+		return response;
 	}
 	
 	/**

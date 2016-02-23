@@ -27,7 +27,6 @@ public class RentalUnitRepository {
 		 final Root<RentalUnit> root = cq.from(RentalUnit.class);
 
 		 Predicate byId = cb.equal(root.get("id"), id);
-
 		 cq.where(byId);
 
 		 TypedQuery<RentalUnit> query = em.createQuery(cq);
@@ -38,7 +37,8 @@ public class RentalUnitRepository {
 	public List<RentalUnit> findAll(){
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<RentalUnit> cq = cb.createQuery(RentalUnit.class);
-//	    final Root<RentalUnit> root = cq.from(RentalUnit.class);
+	    final Root<RentalUnit> root = cq.from(RentalUnit.class);
+	    cq.select(root);
 
 	    TypedQuery<RentalUnit> query = em.createQuery(cq);
 
@@ -55,7 +55,9 @@ public class RentalUnitRepository {
 	      em.persist(entity);
 	    }
 	    em.flush();
+	    
 	    System.out.println(entity.toString());
+	    
 	    return entity;
 	}
 

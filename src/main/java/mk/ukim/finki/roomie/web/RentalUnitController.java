@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class RentalUnitController {
 	
 	@Autowired
-	RentalUnitService rentalUnitService;
+	private RentalUnitService rentalUnitService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	/**
 	 * Display a listing of the resources
@@ -32,8 +32,10 @@ public class RentalUnitController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody List<RentalUnit> index() {
-		return rentalUnitService.getAllRentalUnits();
+	public @ResponseBody HelperResponseWrapper<RentalUnit> index() {
+		List<RentalUnit> data = rentalUnitService.getAllRentalUnits();
+		HelperResponseWrapper<RentalUnit> response = new HelperResponseWrapper<RentalUnit>(data);
+		return response;
 	}
 	
 	/**

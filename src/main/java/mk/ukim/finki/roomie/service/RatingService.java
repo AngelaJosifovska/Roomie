@@ -1,14 +1,12 @@
 package mk.ukim.finki.roomie.service;
 
-import java.util.List;
-
 import mk.ukim.finki.roomie.model.Rating;
 
 public interface RatingService {
 
-	public Rating getRatingByRentalUnitID(Integer id);
+	public Rating getRatingByRentalUnitID(Integer rental_id);
 	
-	public List<Rating> getAllRatingsForRentalUnit(Integer rental_id);
+	public Double getAllRatingsForRentalUnit(Integer rental_id);
 	
 	public Rating storeRating(Rating Rating);
 	

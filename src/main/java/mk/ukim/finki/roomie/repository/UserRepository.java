@@ -38,7 +38,8 @@ public class UserRepository {
 	public List<User> findAll(){
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<User> cq = cb.createQuery(User.class);
-//	    final Root<User> root = cq.from(User.class);
+	    final Root<User> root = cq.from(User.class);
+	    cq.select(root);
 
 	    TypedQuery<User> query = em.createQuery(cq);
 

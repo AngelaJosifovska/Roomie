@@ -1,7 +1,5 @@
 package mk.ukim.finki.roomie.web;
 
-import java.util.List;
-
 import mk.ukim.finki.roomie.model.Rating;
 import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
@@ -24,19 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class RatingController {
 	
 	@Autowired
-	RatingService ratingService;
+	private RatingService ratingService;
 	@Autowired
-	RentalUnitService rentalUnitService;
+	private RentalUnitService rentalUnitService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	/**
 	 * Display a listing of the resources
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Rating", method = RequestMethod.GET)
-	public @ResponseBody List<Rating> index(@PathVariable int property_id) {
+	@RequestMapping(value = "/{property_id}/User", method = RequestMethod.GET)
+	public @ResponseBody Double index(@PathVariable int property_id) {
 		return ratingService.getAllRatingsForRentalUnit(property_id);
 	}
 	
@@ -45,13 +43,13 @@ public class RatingController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Rating", method = RequestMethod.POST)
+	@RequestMapping(value = "/{property_id}/User", method = RequestMethod.POST)
 	public @ResponseBody Rating store(@PathVariable int property_id, @RequestBody Rating rating, @RequestParam int user_id) {
 		
-		RentalUnit property=rentalUnitService.getRentalUnitById(property_id);		
+		RentalUnit property = rentalUnitService.getRentalUnitById(property_id);		
 		rating.setRentalUnit(property);
 		
-		User user=userService.getUserById(user_id);
+		User user = userService.getUserById(user_id);
 		rating.setUser(user);
 		
 		return ratingService.storeRating(rating);	
@@ -64,7 +62,7 @@ public class RatingController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Rating/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{property_id}/User/{id}", method = RequestMethod.GET)
 	public @ResponseBody Rating show(@PathVariable int property_id, @PathVariable int id) {
 		return ratingService.getRatingByRentalUnitID(id);
 	}
@@ -75,11 +73,10 @@ public class RatingController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/Rating/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{property_id}/User/{id}", method = RequestMethod.PUT)
 	public @ResponseBody Rating update(@PathVariable int property_id, @PathVariable int id, @RequestBody Rating rating) {
-	    Rating old=ratingService.getRatingByRentalUnitID(id);
+	    Rating old = ratingService.getRatingByRentalUnitID(id);
 	    old.setRating_points(rating.getRating_points());
-	    old.setBody(rating.getBody());
 		return ratingService.updateRating(old);
 	}
 	

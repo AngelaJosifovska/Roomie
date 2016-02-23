@@ -16,22 +16,18 @@ public class RentalUnitServiceImpl implements RentalUnitService{
 	RentalUnitRepository rentalUnitRepository;
 	
 	public RentalUnit getRentalUnitById(Integer id) {
-		// TODO Auto-generated method stub
 		return rentalUnitRepository.getRentalUnitById(id);
 	}
 
 	public List<RentalUnit> getAllRentalUnits() {
-		// TODO Auto-generated method stub
 		return rentalUnitRepository.findAll();
 	}
 
 	public RentalUnit storeRentalUnit(RentalUnit rentalUnit) {
-		// TODO Auto-generated method stub
 		return rentalUnitRepository.saveOrUpdate(rentalUnit);
 	}
 
 	public RentalUnit updateRentalUnit(RentalUnit rentalUnit) {
-		// TODO Auto-generated method stub
 		return rentalUnitRepository.saveOrUpdate(rentalUnit);
 	}
 
