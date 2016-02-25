@@ -2,6 +2,7 @@ package mk.ukim.finki.roomie.web;
 
 import java.util.List;
 
+import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
 import mk.ukim.finki.roomie.service.UserService;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,9 +28,11 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody HelperResponseWrapper<User> index() {
-		List<User> list = userService.getAllUsers();
-		HelperResponseWrapper<User> response = new HelperResponseWrapper<User>(list);
+	public @ResponseBody HelperPaginatedResponse<User> index(@RequestParam int page) {
+		long total = userService.getTotal();
+		int maxResults=10;
+		List<User> data = userService.getAllUsers(page,maxResults);
+		HelperPaginatedResponse<User> response=new HelperPaginatedResponse<User>(total, maxResults, page, data);
 		return response;
 	}
 	

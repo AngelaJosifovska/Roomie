@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
 
 @Repository
@@ -44,6 +45,24 @@ public class UserRepository {
 	    TypedQuery<User> query = em.createQuery(cq);
 
 	    return query.getResultList();
+	}
+	public List<User> findAll(int page, int maxResults){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	    CriteriaQuery<User> cq = cb.createQuery(User.class);
+	    final Root<User> root = cq.from(User.class);
+	    cq.select(root);
+
+	    TypedQuery<User> query = em.createQuery(cq)
+	    		.setFirstResult((page-1)*maxResults)
+	    		.setMaxResults(maxResults);
+
+	    return query.getResultList();
+	}
+	public long getTotal(){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		cq.select(cb.count(cq.from(User.class)));
+		return em.createQuery(cq).getSingleResult();
 	}
 	
 	@Transactional

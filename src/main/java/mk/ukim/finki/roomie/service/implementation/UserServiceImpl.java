@@ -35,4 +35,14 @@ public class UserServiceImpl implements UserService{
 		return userRepository.saveOrUpdate(user);
 	}
 
+	public List<User> getAllUsers(int page, int maxResults) {
+		// TODO Auto-generated method stub
+		return userRepository.findAll(page, maxResults);
+	}
+
+	public Long getTotal() {
+		// TODO Auto-generated method stub
+		return userRepository.getTotal();
+	}
+
 }

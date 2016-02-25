@@ -11,6 +11,10 @@ public interface RentalUnitService {
 	
 	public List<RentalUnit> getAllRentalUnits();
 	
+	public List<RentalUnit> getAllRentalUnits(int page, int maxResults);
+	
+	public Long getTotal();
+	
 	public RentalUnit storeRentalUnit(RentalUnit rentalUnit);
 	
 	public RentalUnit updateRentalUnit(RentalUnit rentalUnit);

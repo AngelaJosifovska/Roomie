@@ -44,6 +44,24 @@ public class RentalUnitRepository {
 
 	    return query.getResultList();
 	}
+	public List<RentalUnit> findAll(int page, int maxResults){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	    CriteriaQuery<RentalUnit> cq = cb.createQuery(RentalUnit.class);
+	    final Root<RentalUnit> root = cq.from(RentalUnit.class);
+	    cq.select(root);
+
+	    TypedQuery<RentalUnit> query = em.createQuery(cq)
+	    		.setFirstResult((page-1)*maxResults)
+	    		.setMaxResults(maxResults);
+
+	    return query.getResultList();
+	}
+	public long getTotal(){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		cq.select(cb.count(cq.from(RentalUnit.class)));
+		return em.createQuery(cq).getSingleResult();
+	}
 	
 	@Transactional
 	public RentalUnit saveOrUpdate(RentalUnit entity) {

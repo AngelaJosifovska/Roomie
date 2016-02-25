@@ -32,9 +32,11 @@ public class RentalUnitController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody HelperResponseWrapper<RentalUnit> index() {
-		List<RentalUnit> data = rentalUnitService.getAllRentalUnits();
-		HelperResponseWrapper<RentalUnit> response = new HelperResponseWrapper<RentalUnit>(data);
+	public @ResponseBody HelperPaginatedResponse<RentalUnit> index(@RequestParam int page) {
+		long total = rentalUnitService.getTotal();
+		int maxResults=10;
+		List<RentalUnit> data = rentalUnitService.getAllRentalUnits(page,maxResults);
+		HelperPaginatedResponse<RentalUnit> response=new HelperPaginatedResponse<RentalUnit>(total, maxResults, page, data);
 		return response;
 	}
 	
