@@ -39,9 +39,11 @@ public class CommentController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{property_id}/Comment", method = RequestMethod.GET)
-	public @ResponseBody HelperResponseWrapper<Comment> index(@PathVariable int property_id) {
-		List<Comment> comments = commentService.getAllCommentsForRentalUnit(property_id);
-		HelperResponseWrapper<Comment> response = new HelperResponseWrapper<Comment>(comments);
+	public @ResponseBody HelperPaginatedResponse<Comment> index(@PathVariable int property_id, @RequestParam int page) {
+		long total = commentService.getTotal(property_id);
+		int maxResults=10;
+		List<Comment> data = commentService.getAllCommentsForRentalUnit(property_id, page, maxResults);
+		HelperPaginatedResponse<Comment> response=new HelperPaginatedResponse<Comment>(total, maxResults, page, data);
 		return response;
 	}
 	

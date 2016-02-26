@@ -36,4 +36,15 @@ public class CommentServiceImpl implements CommentService{
 		
 	}
 
+	public List<Comment> getAllCommentsForRentalUnit(int rental_id,
+			int page, int maxResults) {
+		// TODO Auto-generated method stub
+		return commentRepository.findAll(rental_id, page, maxResults);
+	}
+
+	public Long getTotal(int rental_id) {
+		// TODO Auto-generated method stub
+		return commentRepository.getTotal(rental_id);
+	}
+
 }

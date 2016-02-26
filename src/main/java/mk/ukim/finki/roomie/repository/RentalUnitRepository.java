@@ -49,6 +49,7 @@ public class RentalUnitRepository {
 	    CriteriaQuery<RentalUnit> cq = cb.createQuery(RentalUnit.class);
 	    final Root<RentalUnit> root = cq.from(RentalUnit.class);
 	    cq.select(root);
+	    cq.orderBy(cb.desc(root.get("created_at")));
 
 	    TypedQuery<RentalUnit> query = em.createQuery(cq)
 	    		.setFirstResult((page-1)*maxResults)

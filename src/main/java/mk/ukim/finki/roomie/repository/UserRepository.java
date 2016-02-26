@@ -51,6 +51,7 @@ public class UserRepository {
 	    CriteriaQuery<User> cq = cb.createQuery(User.class);
 	    final Root<User> root = cq.from(User.class);
 	    cq.select(root);
+	    cq.orderBy(cb.desc(root.get("created_at")));
 
 	    TypedQuery<User> query = em.createQuery(cq)
 	    		.setFirstResult((page-1)*maxResults)

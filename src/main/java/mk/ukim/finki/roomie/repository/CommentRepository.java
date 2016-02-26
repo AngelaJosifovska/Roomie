@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import mk.ukim.finki.roomie.model.Comment;
+import mk.ukim.finki.roomie.model.RentalUnit;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,29 @@ public class CommentRepository {
 
 	    return query.getResultList();
 	}
+	public List<Comment> findAll(int rental_id, int page, int maxResults){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	    CriteriaQuery<Comment> cq = cb.createQuery(Comment.class);
+	    final Root<Comment> root = cq.from(Comment.class);
+	    
+	    cq.where(cb.equal(root.get("rentalUnit"), rental_id));
+
+	    TypedQuery<Comment> query = em.createQuery(cq)
+	    		.setFirstResult((page-1)*maxResults)
+	    		.setMaxResults(maxResults);
+
+	    return query.getResultList();
+	}
+	public long getTotal(int rental_id){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		final Root<Comment> root = cq.from(Comment.class);
+		
+		cq.select(cb.count(root));
+		cq.where(cb.equal(root.get("rentalUnit"), rental_id));
+		return em.createQuery(cq).getSingleResult();
+	}
+	
 	
 	@Transactional
 	public Comment saveOrUpdate(Comment entity) {
