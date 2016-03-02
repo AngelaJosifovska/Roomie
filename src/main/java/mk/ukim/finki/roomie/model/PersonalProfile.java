@@ -18,12 +18,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import mk.ukim.finki.roomie.model.enums.Gender;
 
-enum Gender {
-	Male,
-	Female
-}
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "personal_profiles")

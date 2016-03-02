@@ -2,13 +2,12 @@ package mk.ukim.finki.roomie.service.implementation;
 
 import java.util.List;
 
-import org.hibernate.context.TenantIdentifierMismatchException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.repository.RentalUnitRepository;
 import mk.ukim.finki.roomie.service.RentalUnitService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RentalUnitServiceImpl implements RentalUnitService{

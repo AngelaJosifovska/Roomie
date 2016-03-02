@@ -2,7 +2,6 @@ package mk.ukim.finki.roomie.web;
 
 import java.util.List;
 
-import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
 import mk.ukim.finki.roomie.service.UserService;
 

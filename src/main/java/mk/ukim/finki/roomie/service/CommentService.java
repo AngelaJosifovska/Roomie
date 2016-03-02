@@ -3,7 +3,6 @@ package mk.ukim.finki.roomie.service;
 import java.util.List;
 
 import mk.ukim.finki.roomie.model.Comment;
-import mk.ukim.finki.roomie.model.RentalUnit;
 
 public interface CommentService {
 	

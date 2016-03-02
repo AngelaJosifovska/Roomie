@@ -10,11 +10,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import mk.ukim.finki.roomie.model.User;
+import mk.ukim.finki.roomie.model.enums.RegistrationStatus;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import mk.ukim.finki.roomie.model.RentalUnit;
-import mk.ukim.finki.roomie.model.User;
 
 @Repository
 public class UserRepository {
@@ -36,34 +36,42 @@ public class UserRepository {
 		 return query.getSingleResult();
 	}
 	
-	public List<User> findAll(){
+	public List<User> findAll() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<User> cq = cb.createQuery(User.class);
 	    final Root<User> root = cq.from(User.class);
-	    cq.select(root);
+	    
+	    Predicate ifActive = cb.equal(root.get("profile_active"), true);
+	    Predicate ifComplete = cb.equal(root.get("registration_status"), RegistrationStatus.complete);
+	    
+	    cq.where(ifActive, ifComplete);
 
 	    TypedQuery<User> query = em.createQuery(cq);
 
 	    return query.getResultList();
 	}
+	
 	public List<User> findAll(int page, int maxResults){
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<User> cq = cb.createQuery(User.class);
 	    final Root<User> root = cq.from(User.class);
-	    cq.select(root);
+	    
+	    Predicate ifActive = cb.equal(root.get("profile_active"), true);
+	    Predicate ifComplete = cb.equal(root.get("registration_status"), RegistrationStatus.complete);
+	    
+	    cq.where(ifActive, ifComplete);
+	    
 	    cq.orderBy(cb.desc(root.get("created_at")));
 
 	    TypedQuery<User> query = em.createQuery(cq)
-	    		.setFirstResult((page-1)*maxResults)
+	    		.setFirstResult((page - 1) * maxResults)
 	    		.setMaxResults(maxResults);
 
 	    return query.getResultList();
 	}
+	
 	public long getTotal(){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		cq.select(cb.count(cq.from(User.class)));
-		return em.createQuery(cq).getSingleResult();
+		return this.findAll().size();
 	}
 	
 	@Transactional

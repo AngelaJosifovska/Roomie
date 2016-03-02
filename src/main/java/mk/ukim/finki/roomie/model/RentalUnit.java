@@ -18,15 +18,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import mk.ukim.finki.roomie.model.enums.Class;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-enum Class{
-	Small,
-	Standard,
-	Large,
-	Luxury
-}
 
 @Entity
 @Table(name="rental_units")

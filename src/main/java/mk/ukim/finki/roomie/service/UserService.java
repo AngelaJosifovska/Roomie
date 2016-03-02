@@ -2,7 +2,6 @@ package mk.ukim.finki.roomie.service;
 
 import java.util.List;
 
-import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
 
 public interface UserService {

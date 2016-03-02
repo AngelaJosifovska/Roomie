@@ -16,20 +16,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import mk.ukim.finki.roomie.model.enums.RegistrationStatus;
+import mk.ukim.finki.roomie.model.enums.Role;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
- 
-enum RegistrationStatus {
-	personal,
-	roommate,
-	complete
-}
-
-enum Role {
-	admin,
-	user
-}
  
 @Entity
 @Table(name="users")

@@ -38,17 +38,24 @@ public class RentalUnitRepository {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<RentalUnit> cq = cb.createQuery(RentalUnit.class);
 	    final Root<RentalUnit> root = cq.from(RentalUnit.class);
-	    cq.select(root);
+	    
+	    Predicate ifActive = cb.equal(root.get("property_active"), true);
+	    
+	    cq.where(ifActive);
 
 	    TypedQuery<RentalUnit> query = em.createQuery(cq);
 
 	    return query.getResultList();
 	}
+	
 	public List<RentalUnit> findAll(int page, int maxResults){
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<RentalUnit> cq = cb.createQuery(RentalUnit.class);
 	    final Root<RentalUnit> root = cq.from(RentalUnit.class);
-	    cq.select(root);
+
+	    Predicate ifActive = cb.equal(root.get("property_active"), true);
+	    cq.where(ifActive);
+	    
 	    cq.orderBy(cb.desc(root.get("created_at")));
 
 	    TypedQuery<RentalUnit> query = em.createQuery(cq)
@@ -57,11 +64,9 @@ public class RentalUnitRepository {
 
 	    return query.getResultList();
 	}
+	
 	public long getTotal(){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-		cq.select(cb.count(cq.from(RentalUnit.class)));
-		return em.createQuery(cq).getSingleResult();
+		return this.findAll().size();
 	}
 	
 	@Transactional
