@@ -16,7 +16,7 @@ roomie.controller('FileUploadController', ['$scope', '$rootScope', '$stateParams
             return;
         $scope.loading = true;
 
-        var uploadUrl = "api/User/" + $rootScope.currentUser.id + "/ProfileImage";
+        var uploadUrl = "/roomie/public/api/User/" + $rootScope.currentUser.id + "/ProfileImage";
 
         FileUploadService.uploadFileToUrl($scope.photo, $scope.caption, $scope.description, uploadUrl).success(function(data) {
             $scope.loading = false;
@@ -39,7 +39,7 @@ roomie.controller('FileUploadController', ['$scope', '$rootScope', '$stateParams
             return;
         $scope.loading = true;
 
-        var uploadUrl = "api/RentalUnit/" + $stateParams.id + "/PropertyPicture";
+        var uploadUrl = "/roomie/public/api/RentalUnit/" + $stateParams.id + "/PropertyPicture";
 
         FileUploadService.uploadFileToUrl($scope.photo, $scope.caption, '', uploadUrl).success(function(data) {
             $scope.loading = false;
