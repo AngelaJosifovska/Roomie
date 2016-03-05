@@ -107,21 +107,21 @@ public class RentalUnit {
     @Column(nullable = false, insertable=true, updatable=true, columnDefinition = "default CURRENT_TIMESTAMP")
 	private Date updated_at;
 	
-	@PrePersist
-	void onCreate(){
-		this.created_at = new Date();
-		this.updated_at = new Date();
-	}
-	@PreUpdate
-	void onPersist(){
-		this.updated_at = new Date();
-	}
-	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
 	
+	@PrePersist
+	public void onCreate(){
+		this.created_at = new Date();
+		this.updated_at = new Date();
+	}
+	
+	@PreUpdate
+	public void onPersist(){
+		this.updated_at = new Date();
+	}
 	
 	public Integer getId() {
 		return id;

@@ -2,6 +2,7 @@ package mk.ukim.finki.roomie.web;
 
 import java.util.List;
 
+import mk.ukim.finki.roomie.helper.HelperPaginatedResponse;
 import mk.ukim.finki.roomie.model.Comment;
 import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;

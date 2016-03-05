@@ -13,7 +13,7 @@ import mk.ukim.finki.roomie.service.CommentService;
 public class CommentServiceImpl implements CommentService{
 	
 	@Autowired
-	CommentRepository commentRepository;
+	private CommentRepository commentRepository;
 
 	public Comment getCommentByRentalUnitID(Integer id) {
 		return commentRepository.getCommentById(id);
@@ -33,17 +33,13 @@ public class CommentServiceImpl implements CommentService{
 
 	public void deleteComment(Integer id) {
 		commentRepository.delete(id);
-		
 	}
 
-	public List<Comment> getAllCommentsForRentalUnit(int rental_id,
-			int page, int maxResults) {
-		// TODO Auto-generated method stub
+	public List<Comment> getAllCommentsForRentalUnit(int rental_id,	int page, int maxResults) {
 		return commentRepository.findAll(rental_id, page, maxResults);
 	}
 
 	public Long getTotal(int rental_id) {
-		// TODO Auto-generated method stub
 		return commentRepository.getTotal(rental_id);
 	}
 

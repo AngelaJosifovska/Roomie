@@ -74,14 +74,13 @@ public class PersonalProfile {
     private Date updated_at;
    
     @PrePersist
-    void onCreate(){
-//        this.created_at = new Timestamp(new Date().getTime());
+    public void onCreate() {
     	this.created_at = new Date();
+    	this.updated_at = new Date();
     }
     
     @PreUpdate
-    void onPersist(){
-//        this.updated_at = new Timestamp(new Date().getTime());
+    public void onPersist() {
     	this.updated_at = new Date();
     }
 

@@ -49,13 +49,13 @@ public class Rating {
 	private RentalUnit rentalUnit;
 	
 	@PrePersist
-	void onCreate(){
+	public void onCreate(){
 		this.created_at = new Date();
 		this.updated_at = new Date();
 	}
 	
 	@PreUpdate
-	void onPersist(){
+	public void onPersist(){
 		this.updated_at = new Date();
 	}
 	

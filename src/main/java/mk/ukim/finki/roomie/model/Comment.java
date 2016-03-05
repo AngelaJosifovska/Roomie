@@ -43,31 +43,28 @@ public class Comment {
 	@JoinColumn(name="from_user")
 	private User user;
 
-	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="on_rental")
 	private RentalUnit rentalUnit;
 	
-	
-	
 	@PrePersist
-	void onCreate(){
+	public void onCreate(){
 		this.created_at = new Date();
 		this.updated_at = new Date();
 	}
+	
 	@PreUpdate
-	void onPersist(){
+	public void onPersist(){
 		this.updated_at = new Date();
 	}
 	
-	
 	public void setCreated_at(Date date){
-		this.created_at=date;
+		this.created_at = date;
 	}
 	
 	public String getCreated_at() {
-		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String formated = format.format(created_at);
 		return formated;
 	}

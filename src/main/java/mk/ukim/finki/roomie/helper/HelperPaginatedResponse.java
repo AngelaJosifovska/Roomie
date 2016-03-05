@@ -1,4 +1,4 @@
-package mk.ukim.finki.roomie.web;
+package mk.ukim.finki.roomie.helper;
 
 import java.util.List;
 

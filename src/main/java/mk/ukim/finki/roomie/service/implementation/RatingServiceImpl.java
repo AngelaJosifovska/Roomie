@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class RatingServiceImpl implements RatingService{
 	
 	@Autowired
-	RatingRepository ratingRepository;
+	private RatingRepository ratingRepository;
 
 	public Rating getRatingByRentalUnitID(Integer rental_id) {
 		return ratingRepository.getRatingByRentalUnitID(rental_id);

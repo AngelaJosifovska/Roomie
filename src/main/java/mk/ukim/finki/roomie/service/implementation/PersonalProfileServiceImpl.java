@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonalProfileServiceImplementation implements PersonalProfileService {
+public class PersonalProfileServiceImpl implements PersonalProfileService {
 	
 	@Autowired
 	private PersonalProfileRepository repo;

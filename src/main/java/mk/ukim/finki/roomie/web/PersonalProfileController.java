@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mk.ukim.finki.roomie.model.User;
-import mk.ukim.finki.roomie.service.implementation.PersonalProfileServiceImplementation;
+import mk.ukim.finki.roomie.service.implementation.PersonalProfileServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonalProfileController {
 	
 	@Autowired
-	private PersonalProfileServiceImplementation personalProfileService;
+	private PersonalProfileServiceImpl personalProfileService;
 	
 	/**
 	 * Display a listing of the resources

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class RentalUnitServiceImpl implements RentalUnitService{
 
 	@Autowired
-	RentalUnitRepository rentalUnitRepository;
+	private RentalUnitRepository rentalUnitRepository;
 	
 	public RentalUnit getRentalUnitById(Integer id) {
 		return rentalUnitRepository.getRentalUnitById(id);

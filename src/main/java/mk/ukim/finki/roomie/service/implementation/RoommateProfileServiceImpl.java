@@ -8,7 +8,7 @@ import mk.ukim.finki.roomie.repository.RoommateProfileRepository;
 import mk.ukim.finki.roomie.service.RoommateProfileService;
 
 @Service
-public class RoommateProfileServiceImplementation implements RoommateProfileService {
+public class RoommateProfileServiceImpl implements RoommateProfileService {
 	
 	@Autowired
 	private RoommateProfileRepository repo;
