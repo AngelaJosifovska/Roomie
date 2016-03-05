@@ -28,15 +28,29 @@ public class UserRepository {
 		 final Root<User> root = cq.from(User.class);
 
 		 Predicate byId = cb.equal(root.get("id"), id);
+		 cq.where(byId);
+
+		 TypedQuery<User> query = em.createQuery(cq);
+		 return query.getSingleResult();
+	}
+	
+	public User getUserByEmail(String email){
+		 CriteriaBuilder cb = em.getCriteriaBuilder();
+		 CriteriaQuery<User> cq = cb.createQuery(User.class);
+		 final Root<User> root = cq.from(User.class);
+
+		 Predicate byId = cb.equal(root.get("email"),email);
 
 		 cq.where(byId);
 
 		 TypedQuery<User> query = em.createQuery(cq);
-
-		 return query.getSingleResult();
+         
+		 User user= query.getSingleResult();
+		 
+		 return user;
 	}
 	
-	public List<User> findAll() {
+	public List<User> findAll(){
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<User> cq = cb.createQuery(User.class);
 	    final Root<User> root = cq.from(User.class);
@@ -77,14 +91,11 @@ public class UserRepository {
 	@Transactional
 	public User saveOrUpdate(User entity) {
 	    if (entity.getId() != null && !em.contains(entity)) {
-//	      User old = getUserById(entity.getId());
-//	      entity.setCreated_at(old.getCreated_at_Date());
 	      entity = em.merge(entity);
 	    } else {
 	      em.persist(entity);
 	    }
 	    em.flush();
-	    System.out.println(entity.toString());
 	    return entity;
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import mk.ukim.finki.roomie.model.User;
 
-public interface UserService {
+public interface UserService extends org.springframework.security.core.userdetails.UserDetailsService{
 
 	public User getUserById(Integer id);
 	
@@ -17,5 +17,7 @@ public interface UserService {
 	public User storeUser(User user);
 	
 	public User updateUser(User user);
+	
+	public User getUserByUsername(String username);
 	
 }
