@@ -107,6 +107,29 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-web</artifactId>
+    		<version>3.2.5.RELEASE</version>
+		</dependency>
+
+		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-config</artifactId>
+    		<version>3.2.5.RELEASE</version>
+		</dependency>
+
+		<dependency>
+    		<groupId>io.jsonwebtoken</groupId>
+    		<artifactId>jjwt</artifactId>
+    		<version>0.6.0</version>
+		</dependency>
+
+        <dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
 
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -415,6 +438,7 @@
                     </systemProperties>
                 </configuration>
             </plugin>
+           
 
         </plugins>
     </build>
