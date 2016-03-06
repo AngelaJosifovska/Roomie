@@ -2,10 +2,6 @@
  * Created by Viktor on 31.01.2016.
  */
 
-/**
- * Created by Viktor on 19.01.2016.
- */
-
 roomie.controller('UserController',
     ['$scope', '$http', '$rootScope', '$location', '$filter', '$stateParams', 'ProfileService',
 

@@ -41,6 +41,17 @@ public class RoommateMatcherController {
 		HelperPaginatedResponse<Match> response = new HelperPaginatedResponse<Match>(total, maxResults, page, data);
 		return response;
 	}
+	
+	/**
+	 * Display the total count of matches for a given user.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}/total", method = RequestMethod.GET)
+	public @ResponseBody long total(@PathVariable int id) {
+		return matchingService.getTotal(id);
+	}
 
 	/**
 	 * Display the next potential match.

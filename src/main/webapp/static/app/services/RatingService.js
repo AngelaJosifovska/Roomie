@@ -20,7 +20,6 @@ roomie.factory('RatingService', function($http) {
             });
         },
 
-
         saveRating: function(property_id, user_id, rating_obj) {
             return $http({
                 url: '/roomie/public/api/RentalUnit/' + property_id + '/User/' + user_id,

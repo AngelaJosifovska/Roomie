@@ -53,6 +53,9 @@
             <li class="active"><a href="#/home">Home</a></li>
             <li><a href="#/propertyList">Browse Properties</a></li>
             <li><a href="#/users">Find roommates</a></li>
+            <li ng-controller="MatchController" ng-if="authenticated" ng-init="getTotalMatches()">
+            	<a href="#/match">Find a match <span class="badge" style="margin-left: 5px">{{ totalMatches }}</span></a>
+            </li>
         </ul>
 
         <ul ng-controller="AuthController" ng-if="authenticated" class="nav navbar-nav navbar-right">
@@ -135,6 +138,7 @@
     <script src="app/services/CommentService.js"></script>
     <script src="app/services/FileUploadService.js"></script>
     <script src="app/services/RatingService.js"></script>
+    <script src="app/services/MatchService.js"></script>
     <!-- Controllers -->
     <script src="app/controllers/RentalUnitController.js"></script>
     <script src="app/controllers/AuthController.js"></script>
@@ -145,6 +149,7 @@
     <script src="app/controllers/UserController.js"></script>
     <script src="app/controllers/RegistrationController.js"></script>
     <script src="app/controllers/RatingController.js"></script>
+    <script src="app/controllers/MatchController.js"></script>
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

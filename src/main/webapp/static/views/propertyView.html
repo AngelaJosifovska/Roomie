@@ -371,7 +371,7 @@
 							    <img ng-src="{{ comment.user.profilePicture.location }}" ng-show="comment.user.profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
                             
                                 <h4 style="display: inline-block">
-                                    {{ comment.user.name }} <br />
+                                	<a href="{{ '#/userProfile/' + comment.user.id }}">{{ comment.user.name }}</a> <br />
                                     <small>{{ comment.created_at | amDateFormat: 'MMM D, YYYY' }} at {{ comment.created_at | amDateFormat: 'HH:mm' }}</small>
                                 </h4>
 
