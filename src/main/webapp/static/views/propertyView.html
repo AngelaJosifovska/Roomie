@@ -33,7 +33,7 @@
         </small>
     </h3>
 
-    <button type="button" class="btn btn-danger" style="margin-bottom: 10px" ng-show="authenticated && currentUser.id == property.user_id" ng-click="toggleActivation()">
+    <button type="button" class="btn btn-danger" style="margin-bottom: 10px" ng-show="authenticated && currentUser.id == property.user.id" ng-click="toggleActivation()">
         <span ng-show="property.property_active == 1">Hide property</span>
         <span ng-show="property.property_active == 0">Show property</span>
     </button>
@@ -97,7 +97,7 @@
                 <div class="panel-heading">
                     <h4 style="display: inline-block">Property Details</h4>
 
-                    <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == property.user_id">
+                    <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == property.user.id">
                         <!-- button to show form -->
                         <button type="button" class="btn btn-default" ng-click="propertyForm.$show()" ng-show="!propertyForm.$visible">
                             <i class="fa fa-pencil fw"></i>
@@ -297,7 +297,7 @@
             <h4 style="display: inline-block">Property Photos</h4>
 
 
-            <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == property.user_id">
+            <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == property.user.id">
                 <!-- Trigger the modal with a button -->
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#propertyPhotoUpload">
                     <i class="fa fa-arrow-circle-up fw"></i>
@@ -366,12 +366,16 @@
 
                         <div class="panel panel-default comment-box" ng-repeat="comment in comments">
                             <div class="panel-heading">
+                            	<img ng-src="images/default-male.png" ng-show="comment.user.personal_profile.gender == 'Male' && !comment.user.profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
+							    <img ng-src="images/default-female.png" ng-show="comment.user.personal_profile.gender == 'Female' && !comment.user.profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
+							    <img ng-src="{{ comment.user.profilePicture.location }}" ng-show="comment.user.profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
+                            
                                 <h4 style="display: inline-block">
                                     {{ comment.user.name }} <br />
                                     <small>{{ comment.created_at | amDateFormat: 'MMM D, YYYY' }} at {{ comment.created_at | amDateFormat: 'HH:mm' }}</small>
                                 </h4>
 
-                                <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == comment.from_user">
+                                <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == comment.user.id">
                                     <!-- button to show form -->
                                     <button type="button" class="btn btn-warning delete" ng-click="deleteComment(comment.id)">
                                         <i class="fa fa-trash-o"></i>

@@ -29,7 +29,7 @@ roomie.controller('RegistrationController',
                     $auth.login(userData).then(function(data) {
 
                         return $http({
-                            url: 'api/authenticate/user',
+                            url: '/roomie/public/api/authenticate/user',
                             method: "GET"
                         });
 

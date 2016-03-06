@@ -42,12 +42,22 @@ public class Rating {
 	@JoinColumn(name="from_user")
 	private User user;
 
-	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="on_rental")
 	private RentalUnit rentalUnit;
 	
+	public Rating() {
+		super();
+	}
+
+	public Rating(Integer rating_points, User user, RentalUnit rentalUnit) {
+		super();
+		this.rating_points = rating_points;
+		this.user = user;
+		this.rentalUnit = rentalUnit;
+	}
+
 	@PrePersist
 	public void onCreate(){
 		this.created_at = new Date();
@@ -94,12 +104,10 @@ public class Rating {
 		return user;
 	}
 	
-	@JsonIgnore
 	public void setUser(User user) {
 		this.user = user;
 	}
 	
-	@JsonIgnore
 	public void setRentalUnit(RentalUnit rentalUnit) {
 		this.rentalUnit = rentalUnit;
 	}
@@ -116,6 +124,10 @@ public class Rating {
 	public void setRating_points(Integer rating_points) {
 		this.rating_points = rating_points;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Rating [id=" + id + ", rating_points=" + rating_points
+				+ ", user=" + user + ", rentalUnit=" + rentalUnit + "]";
+	}
 }

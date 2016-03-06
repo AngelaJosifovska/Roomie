@@ -27,6 +27,7 @@ roomie.factory('RatingService', function($http) {
                 method: "PUT",
                 //Necessary to indicate that the sent data is JSON
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+//                headers: { 'Content-Type' : 'application/json' },
                 data: $.param(rating_obj)
             });
         }

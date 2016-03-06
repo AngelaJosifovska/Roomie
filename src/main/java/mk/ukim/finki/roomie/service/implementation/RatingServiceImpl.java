@@ -13,8 +13,8 @@ public class RatingServiceImpl implements RatingService{
 	@Autowired
 	private RatingRepository ratingRepository;
 
-	public Rating getRatingByRentalUnitID(Integer rental_id) {
-		return ratingRepository.getRatingByRentalUnitID(rental_id);
+	public Rating getRatingByRentalUnitID(Integer rental_id, Integer user_id) {
+		return ratingRepository.getRatingByRentalUnitID(rental_id, user_id);
 	}
 
 	public Double getAllRatingsForRentalUnit(Integer rental_id) {

@@ -1,5 +1,7 @@
 package mk.ukim.finki.roomie.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -19,18 +21,23 @@ public class RatingRepository {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public Rating getRatingByRentalUnitID(Integer rental_id){
+	public Rating getRatingByRentalUnitID(Integer rental_id, Integer user_id){
 		 CriteriaBuilder cb = em.getCriteriaBuilder();
 		 CriteriaQuery<Rating> cq = cb.createQuery(Rating.class);
 		 final Root<Rating> root = cq.from(Rating.class);
 
-		 Predicate byId = cb.equal(root.get("rentalUnit"), rental_id);
+		 Predicate byRentalId = cb.equal(root.get("rentalUnit"), rental_id);
+		 Predicate byUserId = cb.equal(root.get("user"), user_id);
 
-		 cq.where(byId);
+		 cq.where(byRentalId, byUserId);
 
 		 TypedQuery<Rating> query = em.createQuery(cq);
+		 
+		 List<Rating> result = query.getResultList();
+		 if(result.isEmpty())
+			 return null;
 
-		 return query.getSingleResult();
+		 return result.get(0);
 	}
 	
 	public Double getAverageRatingForRentalUnit(Integer rental_id){	    

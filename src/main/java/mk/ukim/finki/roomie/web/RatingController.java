@@ -8,6 +8,8 @@ import mk.ukim.finki.roomie.service.RentalUnitService;
 import mk.ukim.finki.roomie.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +45,7 @@ public class RatingController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/User", method = RequestMethod.POST)
+	@RequestMapping(value = "/{property_id}/User/{user_id}", method = RequestMethod.POST)
 	public @ResponseBody Rating store(@PathVariable int property_id, @RequestBody Rating rating, @RequestParam int user_id) {
 		
 		RentalUnit property = rentalUnitService.getRentalUnitById(property_id);		
@@ -62,9 +64,9 @@ public class RatingController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/User/{id}", method = RequestMethod.GET)
-	public @ResponseBody Rating show(@PathVariable int property_id, @PathVariable int id) {
-		return ratingService.getRatingByRentalUnitID(id);
+	@RequestMapping(value = "/{property_id}/User/{user_id}", method = RequestMethod.GET)
+	public @ResponseBody Rating show(@PathVariable int property_id, @PathVariable int user_id) {
+		return ratingService.getRatingByRentalUnitID(property_id, user_id);
 	}
 	
 	/**
@@ -73,10 +75,24 @@ public class RatingController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{property_id}/User/{id}", method = RequestMethod.PUT)
-	public @ResponseBody Rating update(@PathVariable int property_id, @PathVariable int id, @RequestBody Rating rating) {
-	    Rating old = ratingService.getRatingByRentalUnitID(id);
-	    old.setRating_points(rating.getRating_points());
+	@RequestMapping(value = "/{property_id}/User/{user_id}", method = RequestMethod.PUT,
+			consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody Rating update(@PathVariable int property_id, @PathVariable int user_id, @RequestBody MultiValueMap<String,String> body) {
+		
+		System.out.println(body.getFirst("from_user"));
+		System.out.println(body.getFirst("on_rental"));
+		System.out.println(body.getFirst("rating_points"));
+		
+	    Rating old = ratingService.getRatingByRentalUnitID(property_id, user_id);
+	    if(old == null) {
+	    	User user = userService.getUserById(Integer.valueOf(body.getFirst("from_user")));
+	    	RentalUnit property = rentalUnitService.getRentalUnitById(Integer.valueOf(body.getFirst("on_rental")));
+	    	Integer rating = Integer.valueOf(body.getFirst("rating_points"));
+	    	old = new Rating(rating, user, property);
+	    } else {
+	    	old.setRating_points(Integer.valueOf(body.getFirst("rating_points")));
+	    }
+	    
 		return ratingService.updateRating(old);
 	}
 	

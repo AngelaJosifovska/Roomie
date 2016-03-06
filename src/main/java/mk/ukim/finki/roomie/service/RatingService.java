@@ -4,7 +4,7 @@ import mk.ukim.finki.roomie.model.Rating;
 
 public interface RatingService {
 
-	public Rating getRatingByRentalUnitID(Integer rental_id);
+	public Rating getRatingByRentalUnitID(Integer rental_id, Integer user_id);
 	
 	public Double getAllRatingsForRentalUnit(Integer rental_id);
 	
