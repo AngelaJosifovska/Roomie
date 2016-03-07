@@ -10,6 +10,7 @@ import mk.ukim.finki.roomie.service.MatchingService;
 import mk.ukim.finki.roomie.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +63,9 @@ public class RoommateMatcherController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody PotentialMatch show(@PathVariable int id) {
 		PotentialMatch nextSuggestion = matchingService.getNextSuggestionForMatching(id);
+		if(nextSuggestion == null)
+			return nextSuggestion;
+		
 		User suggestedUser = userService.getUserById(nextSuggestion.getPotential_id());
 		nextSuggestion.setPotential_user(suggestedUser);
 
@@ -74,8 +78,10 @@ public class RoommateMatcherController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Match store(@PathVariable int id, @RequestBody Match match) {
+		User from_user = userService.getUserById(id);
+		match.setFrom_user(from_user);
 		return matchingService.storeMatch(match);
 	}
 }

@@ -8,340 +8,376 @@
 		<!-- NEXT SUGGESTION FOR A POTENTIAL ROOMMATE -->
 	    <uib-tab index="nextMatch" heading="Next suggestion">
 	    	
-	    	<img ng-src="images/default-male.png" ng-show="p_profile.gender == 'Male' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
-    		<img ng-src="images/default-female.png" ng-show="p_profile.gender == 'Female' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
-    		<img ng-src="{{ profilePicture.location }}" ng-show="profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
-	    	
-	    	
-	    	<!-- SAVING THE CHOICE -->
-	    	<div class="pull-right" style="padding: 0px 20px 15px 20px; border: 2px solid #DF691A; border-radius: 5px; margin-bottom: 20px; margin-right: 70px;">
-	    		<h3 style="text-align: center;"><small>Would you like this Roomie user <br /> to be your roommate?</small></h3> <br />
-	    		<div style="text-align: center;">
-		    		<button type="button" class="btn btn-success" ng-click="positiveAnswer()" style="margin-right: 7px"><i class="fa fa-thumbs-o-up"></i> Yes</button>
-			        <button type="button" class="btn btn-danger" ng-click="negativeAnswer()"><i class="fa fa-thumbs-o-down"></i> No</button>
-		        </div>
-		    </div>
-	    	
-	    	
-	    	<h3>
-		        Meet {{ user.name }} <br />
-		        <small>Joined Roomie <time am-time-ago="p_profile.created_at" title="{{ p_profile.created_at | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time>
-		        </small>
-		    </h3>
-		    
-		    <!-- PERSONAL PROFILE INFORMATION -->
-		    <div class="panel-group" style="margin-top: 40px; clear: both">
-		        <form editable-form name="profileForm">
-		            <div class="panel panel-default">
-		                <div class="panel-heading">
-		                    <h4 style="display: inline-block">Personal Information</h4>
-		                </div>
-		
-		                <div class="panel-body">
-		
-		                    <div class="row">
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-user168"></i>
-		                            <!-- editable field -->
-		                            <label for="first_name" class="title">First name: </label>
-		                            <span id="first_name" editable-text="p_profile.first_name" ng-show="!profileForm.$visible" e-name="first_name" e-required>{{ p_profile.first_name || '--unknown--' }}</span>
-		                        </div>
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-college1"></i>
-		                            <!-- editable field -->
-		                            <label for="education" class="title">Education: </label>
-		                            <span id="education" editable-text="p_profile.education" ng-show="!profileForm.$visible" e-name="education">{{ p_profile.education || '--unknown--' }}</span>
-		                        </div>
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-home78"></i>
-		                            <!-- editable field -->
-		                            <label for="hometown" class="title">Hometown: </label>
-		                            <span id="hometown" editable-text="p_profile.hometown" ng-show="!profileForm.$visible" e-name="hometown">{{ p_profile.hometown || '--unknown--' }}</span>
-		                        </div>
-		                    </div>
-		
-		                    <div class="row">
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-user168"></i>
-		                            <!-- editable field -->
-		                            <label for="last_name" class="title">Last name: </label>
-		                            <span id="last_name" editable-text="p_profile.last_name" ng-show="!profileForm.$visible" e-name="last_name" e-required>{{ p_profile.last_name || '--unknown--' }}</span>
-		                        </div>
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-career1"></i>
-		                            <!-- editable field -->
-		                            <label for="occupation" class="title">Occupation: </label>
-		                            <span id="occupation" editable-text="p_profile.occupation" ng-show="!profileForm.$visible" e-name="occupation">{{ p_profile.occupation || '--unknown--' }}</span>
-		                        </div>
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-location54"></i>
-		                            <!-- editable field -->
-		                            <label for="location" class="title">Location: </label>
-		                            <span id="location" editable-text="p_profile.location" ng-show="!profileForm.$visible" e-name="location">{{ p_profile.location || '--unknown--' }}</span>
-		                        </div>
-		                    </div>
-		
-		                    <div class="row">
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-united8"></i>
-		                            <!-- editable field -->
-		                            <label style="margin-left: 3px" for="gender" class="title">Gender: </label>
-		                            <span id="gender" editable-select="p_profile.gender" ng-show="!profileForm.$visible" e-name="gender" e-ng-options="s.value as s.text for s in sexes" e-required>{{ showGender(p_profile) }}</span>
-		                        </div>
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-archive135"></i>
-		                            <!-- editable field -->
-		                            <label for="workplace" class="title">Workplace: </label>
-		                            <span id="workplace" editable-text="p_profile.workplace" ng-show="!profileForm.$visible" e-name="workplace">{{ p_profile.workplace || '--unknown--' }}</span>
-		                        </div>
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-heart288"></i>
-		                            <!-- editable field -->
-		                            <label for="relationship_status" class="title">Relationship status: </label>
-		                            <span id="relationship_status" editable-select="p_profile.relationship_status" ng-show="!profileForm.$visible" e-name="relationship_status" e-ng-options="s.value as s.text for s in statuses" e-required>{{ showStatus(p_profile) }}</span>
-		                        </div>
-		                    </div>
-		
-		                    <div class="panel-footer" style="margin-top: 20px;">
-		                        <div class="row">
-		                            <div class="col-sm-2">More about me!</div>
-		                            <div id="description" class="col-sm-7">
-		                                <!-- editable field -->
-		                                <span editable-textarea="p_profile.description" e-rows="7" e-cols="40" ng-show="!profileForm.$visible" e-name="description">{{ p_profile.description || '--unknown--' }}</span>
-		                            </div>
-		                            <div class="col-sm-3"></div>
-		                        </div>
-		                    </div>
-		
-		                </div>
-		            </div>
-		        </form>
-		    </div>
-		    
-		    <!-- ROOMMATE PROFILE INFORMATION -->
-		    <div class="panel-group" style="margin-top: 40px">
-		        <form editable-form name="profileForm">
-		            <div class="panel panel-default">
-		                <div class="panel-heading">
-		                    <h4 style="display: inline-block">Roommate Information</h4>
-		                </div>
-		
-		                <div class="panel-body">
-		
-		                    <div class="row">
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-magnifyingglass29"></i>
-		                            <!-- editable field -->
-		                            <label style="margin-left: 3px" for="looking_for" class="title">Looking for: </label>
-		                            <span id="looking_for" editable-select="r_profile.looking_for" ng-show="!profileForm.$visible" e-name="looking_for" e-ng-options="g.value as g.text for g in goals" e-required>{{ showGoal(r_profile) }}</span>
-		                        </div>
-		                        <div class="col-sm-2"></div>
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-sign20"></i>
-		                            <!-- editable field -->
-		                            <label for="lease_length" class="title">Lease length (in months): </label>
-		                            <span id="lease_length" editable-number="r_profile.lease_length" ng-show="!profileForm.$visible" e-name="lease_length" e-min="1" e-required>{{ r_profile.lease_length || '--unknown--' }}</span>
-		                        </div>
-		                    </div>
-		
-		                    <div class="row">
-		                        <div class="col-sm-4">
-		                            <i class="flaticon-money132"></i>
-		                            <!-- editable field -->
-		                            <label style="margin-left: 3px" class="title">Monthly budget: </label>
-		                        </div>
-		                        <div class="col-sm-2"></div>
-		                        <div class="col-sm-3">
-		                            <i class="flaticon-logistics3"></i>
-		                            <!-- editable field -->
-		                            <label style="margin-left: 3px" for="move_in_from" class="title">Move in from: </label>
-		                            <span id="move_in_from" editable-bsdate="r_profile.move_in_from" e-uib-datepicker-popup="dd/MM/yyyy" ng-show="!profileForm.$visible" e-is-open="datePicker.isOpen" e-min-date="datePicker.minDate" e-required>
-		                                {{ (r_profile.move_in_from | date:"dd MMMM yyyy") || 'empty' }}
-		                            </span>
-		                        </div>
-		                        <div class="col-sm-1">
-		                            <button type="button" class="btn btn-default" ng-show="profileForm.$visible" ng-click="openPopUp()">
-		                                <i class="fa fa-calendar fw"></i>
-		                            </button>
-		                        </div>
-		                    </div>
-		
-		                    <div class="row">
-		                        <div class="col-sm-1"></div>
-		                        <div class="col-sm-2">
-		                            <label for="monthly_budget_lower_limit" class="title">From: </label>
-		                            <span id="monthly_budget_lower_limit" editable-text="r_profile.monthly_budget_lower_limit" ng-show="!profileForm.$visible" e-name="monthly_budget_lower_limit" e-required>{{ r_profile.monthly_budget_lower_limit || '--unknown--' }}</span>
-		                        </div>
-		                        <div class="col-sm-2">
-		                            <label for="monthly_budget_upper_limit" class="title">To: </label>
-		                            <span id="monthly_budget_upper_limit" editable-text="r_profile.monthly_budget_upper_limit" ng-show="!profileForm.$visible" e-name="monthly_budget_upper_limit" e-required>{{ r_profile.monthly_budget_upper_limit || '--unknown--' }}</span>
-		                        </div>
-		                    </div>
-		
-		                    <div class="panel-footer" style="margin-top: 20px;">
-		                        <!--<div class="row">-->
-		                        <!--<div class="col-sm-2">More about my habits!</div>-->
-		                        <!--</div>-->
-		
-		                        <div class="row">
-		                            <div class="col-sm-2"><label>Messy</label></div>
-		                            <div class="col-sm-2 text-right"><label>Neat</label></div>
-		
-		                            <div class="col-sm-2"><label>Home all day</label></div>
-		                            <div class="col-sm-2 text-right"><label>Workaholic</label></div>
-		
-		                            <div class="col-sm-2"><label>Early to bed</label></div>
-		                            <div class="col-sm-2 text-right"><label>Never sleep</label></div>
-		                        </div>
-		
-		                        <div class="row" >
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.cleanliness" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.cleanliness / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.cleanliness }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.work_schedule" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.work_schedule / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.work_schedule }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.sleep_schedule" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.sleep_schedule / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.sleep_schedule }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		
-		
-		                        <div class="row">
-		                            <div class="col-sm-2"><label>Non-smoker</label></div>
-		                            <div class="col-sm-2 text-right"><label>Addicted</label></div>
-		
-		                            <div class="col-sm-2"><label>Never drink</label></div>
-		                            <div class="col-sm-2 text-right"><label>All the time</label></div>
-		
-		                            <div class="col-sm-2"><label>Eating out</label></div>
-		                            <div class="col-sm-2 text-right"><label>First class chef</label></div>
-		                        </div>
-		
-		                        <div class="row" >
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.smoking" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.smoking / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.smoking }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.drinking" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.drinking / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.drinking }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.eating_habits" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.eating_habits / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.eating_habits }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		
-		
-		                        <div class="row">
-		                            <div class="col-sm-2"><label>Very strict</label></div>
-		                            <div class="col-sm-2 text-right"><label>Share everything</label></div>
-		
-		                            <div class="col-sm-2"><label>Lone wolf</label></div>
-		                            <div class="col-sm-2 text-right"><label>Party animal</label></div>
-		
-		                            <div class="col-sm-2"><label>I hate animals</label></div>
-		                            <div class="col-sm-2 text-right"><label>Animal person</label></div>
-		                        </div>
-		
-		                        <div class="row" >
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.privacy" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.privacy / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.privacy }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.guests" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.guests / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.guests }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-sm-4">
-		                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.pets" e-min="0" e-max="{{maxValue}}" e-step="1">
-		                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-		                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.pets / maxValue * 100 + '%' ) }">
-		                                        <span>{{ r_profile.pets }} / {{ maxValue }}</span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		
-		                        <div class="row">
-		                            <div class="col-sm-12"><br /></div>
-		                        </div>
-		
-		                        <div class="row">
-		                            <div class="col-sm-1"></div>
-		                            <div class="col-sm-2">
-		                                <i class="flaticon-golf22"></i>
-		                                <label for="hobbies" class="title">Hobbies:</label>
-		                            </div>
-		
-		                            <div class="col-sm-4"></div>
-		                            <div class="col-sm-2">
-		                                <i class="flaticon-weightlifting4"></i>
-		                                <label for="exercise" class="title">Exercise:</label>
-		                            </div>
-		
-		                            <div class="col-sm-1"></div>
-		                        </div>
-		
-		                        <div class="row">
-		                            <div class="col-sm-1"></div>
-		                            <div class="col-sm-4">
-		                                <!-- editable field -->
-		                                <span id="hobbies" editable-textarea="r_profile.hobbies" e-rows="3" e-cols="50" ng-show="!profileForm.$visible" e-name="hobbies">{{ r_profile.hobbies || '--unknown--' }}</span>
-		                            </div>
-		
-		                            <div class="col-sm-2"></div>
-		                            <div class="col-sm-4">
-		                                <!-- editable field -->
-		                                <span id="exercise" editable-textarea="r_profile.exercise" e-rows="3" e-cols="50" ng-show="!profileForm.$visible" e-name="exercise">{{ r_profile.exercise || '--unknown--' }}</span>
-		                            </div>
-		                            <div class="col-sm-1"></div>
-		                        </div>
-		
-		                    </div>
-		
-		                </div>
-		            </div>
-		        </form>
-		    </div>
-
+	    	<h3 ng-show="match.potential_user == null" style="padding: 20px 40px 20px 40px">
+	    		We are sorry! <br />
+	    		<small>We don't have any suggestions for you at the moment</small>
+	    	</h3>
 	    
+	    	<div ng-show="match.potential_user != null">
+		    	<img ng-src="images/default-male.png" ng-show="p_profile.gender == 'Male' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
+	    		<img ng-src="images/default-female.png" ng-show="p_profile.gender == 'Female' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
+	    		<img ng-src="{{ profilePicture.location }}" ng-show="profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
+		    	
+		    	
+		    	<!-- SAVING THE CHOICE -->
+		    	<div class="pull-right" style="padding: 0px 20px 15px 20px; border: 2px solid #DF691A; border-radius: 5px; margin-bottom: 20px; margin-right: 70px;">
+		    		<h3 style="text-align: center;"><small>Would you like this Roomie user <br /> to be your roommate?</small></h3> <br />
+		    		<div style="text-align: center;">
+			    		<button type="button" class="btn btn-success" ng-click="positiveAnswer()" style="margin-right: 7px"><i class="fa fa-thumbs-o-up"></i> Yes</button>
+				        <button type="button" class="btn btn-danger" ng-click="negativeAnswer()"><i class="fa fa-thumbs-o-down"></i> No</button>
+			        </div>
+			    </div>
+			    
+			    
+			    <!-- MODAL DIALOG FOR CONTACT INFORMATION ON MATCHED USER -->
+			    <script id="contactModal" type="text/ng-template">
+			
+			            <!-- Modal content-->
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+			                    <h3 class="modal-title">It's a match!</h3>
+			                </div>
+			                <div class="modal-body">
+			
+			                    <div class="alert alert-success fade-in">
+			                        <a href class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			                        <strong>The user you liked is also interested in you</strong> <br />
+			                    </div>
+
+								<h4>
+									Contact {{ user_match.name }} on his e-mail: <a href="mailto:{{ user_match.email }}?Subject=I%20want%20to%20be%20your%20roommate" target="_top">{{ user_match.email }}</a>
+								</h4>
+			
+			
+			                </div>
+			                <div class="modal-footer">
+			                    <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+			                </div>
+			            </div>
+			
+			    </script>
+		    	
+		   
+		    	<h3>
+			        Meet {{ user.name }} <br />
+			        <small>Joined Roomie <time am-time-ago="p_profile.created_at" title="{{ p_profile.created_at | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time>
+			        </small>
+			    </h3>
+			    
+			    <!-- PERSONAL PROFILE INFORMATION -->
+			    <div class="panel-group" style="margin-top: 40px; clear: both">
+			        <form editable-form name="profileForm">
+			            <div class="panel panel-default">
+			                <div class="panel-heading">
+			                    <h4 style="display: inline-block">Personal Information</h4>
+			                </div>
+			
+			                <div class="panel-body">
+			
+			                    <div class="row">
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-user168"></i>
+			                            <!-- editable field -->
+			                            <label for="first_name" class="title">First name: </label>
+			                            <span id="first_name" editable-text="p_profile.first_name" ng-show="!profileForm.$visible" e-name="first_name" e-required>{{ p_profile.first_name || '--unknown--' }}</span>
+			                        </div>
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-college1"></i>
+			                            <!-- editable field -->
+			                            <label for="education" class="title">Education: </label>
+			                            <span id="education" editable-text="p_profile.education" ng-show="!profileForm.$visible" e-name="education">{{ p_profile.education || '--unknown--' }}</span>
+			                        </div>
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-home78"></i>
+			                            <!-- editable field -->
+			                            <label for="hometown" class="title">Hometown: </label>
+			                            <span id="hometown" editable-text="p_profile.hometown" ng-show="!profileForm.$visible" e-name="hometown">{{ p_profile.hometown || '--unknown--' }}</span>
+			                        </div>
+			                    </div>
+			
+			                    <div class="row">
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-user168"></i>
+			                            <!-- editable field -->
+			                            <label for="last_name" class="title">Last name: </label>
+			                            <span id="last_name" editable-text="p_profile.last_name" ng-show="!profileForm.$visible" e-name="last_name" e-required>{{ p_profile.last_name || '--unknown--' }}</span>
+			                        </div>
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-career1"></i>
+			                            <!-- editable field -->
+			                            <label for="occupation" class="title">Occupation: </label>
+			                            <span id="occupation" editable-text="p_profile.occupation" ng-show="!profileForm.$visible" e-name="occupation">{{ p_profile.occupation || '--unknown--' }}</span>
+			                        </div>
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-location54"></i>
+			                            <!-- editable field -->
+			                            <label for="location" class="title">Location: </label>
+			                            <span id="location" editable-text="p_profile.location" ng-show="!profileForm.$visible" e-name="location">{{ p_profile.location || '--unknown--' }}</span>
+			                        </div>
+			                    </div>
+			
+			                    <div class="row">
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-united8"></i>
+			                            <!-- editable field -->
+			                            <label style="margin-left: 3px" for="gender" class="title">Gender: </label>
+			                            <span id="gender" editable-select="p_profile.gender" ng-show="!profileForm.$visible" e-name="gender" e-ng-options="s.value as s.text for s in sexes" e-required>{{ showGender(p_profile) }}</span>
+			                        </div>
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-archive135"></i>
+			                            <!-- editable field -->
+			                            <label for="workplace" class="title">Workplace: </label>
+			                            <span id="workplace" editable-text="p_profile.workplace" ng-show="!profileForm.$visible" e-name="workplace">{{ p_profile.workplace || '--unknown--' }}</span>
+			                        </div>
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-heart288"></i>
+			                            <!-- editable field -->
+			                            <label for="relationship_status" class="title">Relationship status: </label>
+			                            <span id="relationship_status" editable-select="p_profile.relationship_status" ng-show="!profileForm.$visible" e-name="relationship_status" e-ng-options="s.value as s.text for s in statuses" e-required>{{ showStatus(p_profile) }}</span>
+			                        </div>
+			                    </div>
+			
+			                    <div class="panel-footer" style="margin-top: 20px;">
+			                        <div class="row">
+			                            <div class="col-sm-2">More about me!</div>
+			                            <div id="description" class="col-sm-7">
+			                                <!-- editable field -->
+			                                <span editable-textarea="p_profile.description" e-rows="7" e-cols="40" ng-show="!profileForm.$visible" e-name="description">{{ p_profile.description || '--unknown--' }}</span>
+			                            </div>
+			                            <div class="col-sm-3"></div>
+			                        </div>
+			                    </div>
+			
+			                </div>
+			            </div>
+			        </form>
+			    </div>
+			    
+			    <!-- ROOMMATE PROFILE INFORMATION -->
+			    <div class="panel-group" style="margin-top: 40px">
+			        <form editable-form name="profileForm">
+			            <div class="panel panel-default">
+			                <div class="panel-heading">
+			                    <h4 style="display: inline-block">Roommate Information</h4>
+			                </div>
+			
+			                <div class="panel-body">
+			
+			                    <div class="row">
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-magnifyingglass29"></i>
+			                            <!-- editable field -->
+			                            <label style="margin-left: 3px" for="looking_for" class="title">Looking for: </label>
+			                            <span id="looking_for" editable-select="r_profile.looking_for" ng-show="!profileForm.$visible" e-name="looking_for" e-ng-options="g.value as g.text for g in goals" e-required>{{ showGoal(r_profile) }}</span>
+			                        </div>
+			                        <div class="col-sm-2"></div>
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-sign20"></i>
+			                            <!-- editable field -->
+			                            <label for="lease_length" class="title">Lease length (in months): </label>
+			                            <span id="lease_length" editable-number="r_profile.lease_length" ng-show="!profileForm.$visible" e-name="lease_length" e-min="1" e-required>{{ r_profile.lease_length || '--unknown--' }}</span>
+			                        </div>
+			                    </div>
+			
+			                    <div class="row">
+			                        <div class="col-sm-4">
+			                            <i class="flaticon-money132"></i>
+			                            <!-- editable field -->
+			                            <label style="margin-left: 3px" class="title">Monthly budget: </label>
+			                        </div>
+			                        <div class="col-sm-2"></div>
+			                        <div class="col-sm-3">
+			                            <i class="flaticon-logistics3"></i>
+			                            <!-- editable field -->
+			                            <label style="margin-left: 3px" for="move_in_from" class="title">Move in from: </label>
+			                            <span id="move_in_from" editable-bsdate="r_profile.move_in_from" e-uib-datepicker-popup="dd/MM/yyyy" ng-show="!profileForm.$visible" e-is-open="datePicker.isOpen" e-min-date="datePicker.minDate" e-required>
+			                                {{ (r_profile.move_in_from | date:"dd MMMM yyyy") || 'empty' }}
+			                            </span>
+			                        </div>
+			                        <div class="col-sm-1">
+			                            <button type="button" class="btn btn-default" ng-show="profileForm.$visible" ng-click="openPopUp()">
+			                                <i class="fa fa-calendar fw"></i>
+			                            </button>
+			                        </div>
+			                    </div>
+			
+			                    <div class="row">
+			                        <div class="col-sm-1"></div>
+			                        <div class="col-sm-2">
+			                            <label for="monthly_budget_lower_limit" class="title">From: </label>
+			                            <span id="monthly_budget_lower_limit" editable-text="r_profile.monthly_budget_lower_limit" ng-show="!profileForm.$visible" e-name="monthly_budget_lower_limit" e-required>{{ r_profile.monthly_budget_lower_limit || '--unknown--' }}</span>
+			                        </div>
+			                        <div class="col-sm-2">
+			                            <label for="monthly_budget_upper_limit" class="title">To: </label>
+			                            <span id="monthly_budget_upper_limit" editable-text="r_profile.monthly_budget_upper_limit" ng-show="!profileForm.$visible" e-name="monthly_budget_upper_limit" e-required>{{ r_profile.monthly_budget_upper_limit || '--unknown--' }}</span>
+			                        </div>
+			                    </div>
+			
+			                    <div class="panel-footer" style="margin-top: 20px;">
+			                        <!--<div class="row">-->
+			                        <!--<div class="col-sm-2">More about my habits!</div>-->
+			                        <!--</div>-->
+			
+			                        <div class="row">
+			                            <div class="col-sm-2"><label>Messy</label></div>
+			                            <div class="col-sm-2 text-right"><label>Neat</label></div>
+			
+			                            <div class="col-sm-2"><label>Home all day</label></div>
+			                            <div class="col-sm-2 text-right"><label>Workaholic</label></div>
+			
+			                            <div class="col-sm-2"><label>Early to bed</label></div>
+			                            <div class="col-sm-2 text-right"><label>Never sleep</label></div>
+			                        </div>
+			
+			                        <div class="row" >
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.cleanliness" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.cleanliness / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.cleanliness }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.work_schedule" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.work_schedule / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.work_schedule }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.sleep_schedule" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.sleep_schedule / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.sleep_schedule }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			
+			
+			                        <div class="row">
+			                            <div class="col-sm-2"><label>Non-smoker</label></div>
+			                            <div class="col-sm-2 text-right"><label>Addicted</label></div>
+			
+			                            <div class="col-sm-2"><label>Never drink</label></div>
+			                            <div class="col-sm-2 text-right"><label>All the time</label></div>
+			
+			                            <div class="col-sm-2"><label>Eating out</label></div>
+			                            <div class="col-sm-2 text-right"><label>First class chef</label></div>
+			                        </div>
+			
+			                        <div class="row" >
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.smoking" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.smoking / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.smoking }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.drinking" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.drinking / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.drinking }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.eating_habits" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.eating_habits / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.eating_habits }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			
+			
+			                        <div class="row">
+			                            <div class="col-sm-2"><label>Very strict</label></div>
+			                            <div class="col-sm-2 text-right"><label>Share everything</label></div>
+			
+			                            <div class="col-sm-2"><label>Lone wolf</label></div>
+			                            <div class="col-sm-2 text-right"><label>Party animal</label></div>
+			
+			                            <div class="col-sm-2"><label>I hate animals</label></div>
+			                            <div class="col-sm-2 text-right"><label>Animal person</label></div>
+			                        </div>
+			
+			                        <div class="row" >
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.privacy" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.privacy / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.privacy }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.guests" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.guests / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.guests }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-4">
+			                                <div class="progress" ng-show="!profileForm.$visible" editable-range="r_profile.pets" e-min="0" e-max="{{maxValue}}" e-step="1">
+			                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+			                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" ng-style="{width: ( r_profile.pets / maxValue * 100 + '%' ) }">
+			                                        <span>{{ r_profile.pets }} / {{ maxValue }}</span>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			
+			                        <div class="row">
+			                            <div class="col-sm-12"><br /></div>
+			                        </div>
+			
+			                        <div class="row">
+			                            <div class="col-sm-1"></div>
+			                            <div class="col-sm-2">
+			                                <i class="flaticon-golf22"></i>
+			                                <label for="hobbies" class="title">Hobbies:</label>
+			                            </div>
+			
+			                            <div class="col-sm-4"></div>
+			                            <div class="col-sm-2">
+			                                <i class="flaticon-weightlifting4"></i>
+			                                <label for="exercise" class="title">Exercise:</label>
+			                            </div>
+			
+			                            <div class="col-sm-1"></div>
+			                        </div>
+			
+			                        <div class="row">
+			                            <div class="col-sm-1"></div>
+			                            <div class="col-sm-4">
+			                                <!-- editable field -->
+			                                <span id="hobbies" editable-textarea="r_profile.hobbies" e-rows="3" e-cols="50" ng-show="!profileForm.$visible" e-name="hobbies">{{ r_profile.hobbies || '--unknown--' }}</span>
+			                            </div>
+			
+			                            <div class="col-sm-2"></div>
+			                            <div class="col-sm-4">
+			                                <!-- editable field -->
+			                                <span id="exercise" editable-textarea="r_profile.exercise" e-rows="3" e-cols="50" ng-show="!profileForm.$visible" e-name="exercise">{{ r_profile.exercise || '--unknown--' }}</span>
+			                            </div>
+			                            <div class="col-sm-1"></div>
+			                        </div>
+			
+			                    </div>
+			
+			                </div>
+			            </div>
+			        </form>
+			    </div>
+
+	    	</div>
 	    </uib-tab>
 	    
 	    

@@ -27,7 +27,7 @@ public class MatchingRepository {
 		    "FROM (" +
 		            "SELECT users.id AS id " + 
 		            "FROM users " + 
-		            "WHERE users.id NOT IN (:id)" +
+		            "WHERE users.id NOT IN (:id) AND users.profile_active = 1 AND users.registration_status = 'complete'" +
 		        ") P LEFT JOIN (" +
 		            "SELECT matches.to_user AS id " +
 		            "FROM matches " + 

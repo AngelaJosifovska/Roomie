@@ -58,6 +58,7 @@ roomie.controller('RegistrationController',
 
                         $('#registrationForm').removeClass('fade').removeClass('show');
                         $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
 
                         // If login is successful, redirect to the users state
                         $state.go('completeProfile', {});

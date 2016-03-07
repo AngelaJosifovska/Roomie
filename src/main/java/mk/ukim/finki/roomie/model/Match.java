@@ -2,7 +2,6 @@ package mk.ukim.finki.roomie.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
- 
+
 @Entity
 @Table(name = "matches")
 public class Match {
@@ -37,11 +36,11 @@ public class Match {
     private Date updated_at;
     
     @JsonIgnore
-	@ManyToOne(optional = false, targetEntity = User.class, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, targetEntity = User.class)
     @JoinColumn(name = "from_user", nullable = false, referencedColumnName = "id")
     private User from_user;
     
-	@ManyToOne(optional = false, targetEntity = User.class, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, targetEntity = User.class)
     @JoinColumn(name = "to_user", nullable = false, referencedColumnName = "id")
     private User to_user;
    
@@ -114,4 +113,12 @@ public class Match {
 	public void setTo_user(User to_user) {
 		this.to_user = to_user;
 	}
+
+	@Override
+	public String toString() {
+		return "Match [id=" + id + ", interested=" + interested
+				+ ", from_user=" + from_user + ", to_user=" + to_user + "]";
+	}
+	
+	
 }

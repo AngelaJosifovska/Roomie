@@ -26,6 +26,16 @@ roomie.factory('MatchService', function($http) {
                 method: "GET"
             });
         },
+        
+        saveChoice: function(user_id, matchData) {
+        	return $http({
+                url: '/roomie/public/api/Matcher/' + user_id,
+                method: "POST",
+                // Necessary to indicate that the sent data is JSON
+                headers: { 'Content-Type' : 'application/json' },
+                data: matchData
+            });
+        },
 
     }
 

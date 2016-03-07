@@ -3,9 +3,9 @@
  */
 
 roomie.controller('MatchController',
-    ['$scope', '$http', '$rootScope', '$location', '$filter', '$stateParams', 'MatchService',
+    ['$scope', '$http', '$rootScope', '$location', '$filter', '$stateParams', '$uibModal', 'MatchService',
 
-        function($scope, $http, $rootScope, $location, $filter, $stateParams, MatchService)
+        function($scope, $http, $rootScope, $location, $filter, $stateParams, $uibModal, MatchService)
         {
     		$scope.fullProfiles = [];
     		$scope.match = {};
@@ -42,6 +42,24 @@ roomie.controller('MatchController',
                 {value: 'Married', text: 'Married'}
     		];
     		
+            $scope.goals = [
+                {value: 'Just a roommate', text: 'Just a roommate'},
+                {value: 'Roommate with an apartment', text: 'Roommate with an apartment'},
+                {value: 'Just a room', text: 'Just a room'},
+                {value: 'Anything', text: 'Anything'}
+            ];
+
+            /**
+             * Necessary to properly show the editable select drop-down
+             */
+            $scope.showGoal = function(r_profile) {
+            	var selected = [];
+                if(r_profile.looking_for) {
+                	selected = $filter('filter')($scope.goals, {value: r_profile.looking_for});
+                }
+                return selected.length ? selected[0].text : 'Not set';
+            };
+    		
     		/**
              * Necessary to properly show the editable select drop-down
              */
@@ -73,11 +91,12 @@ roomie.controller('MatchController',
 	
 	            MatchService.getNextMatch($rootScope.currentUser.id).success(function (data) {
 	                $scope.loading = false;
-//	                $scope.totalMatches = data;
 	                $scope.match = data;
-	                $scope.user = data.potential_user;
-                    $scope.p_profile = data.potential_user.personal_profile;
-                    $scope.r_profile = data.potential_user.roommate_profile;
+	                if(data.potential_user != null) {
+	                	$scope.user = data.potential_user;
+	                    $scope.p_profile = data.potential_user.personal_profile;
+	                    $scope.r_profile = data.potential_user.roommate_profile;
+	                }
 	                console.log(data);
 	            }).error(function (data) {
 	                console.log(data);
@@ -112,7 +131,28 @@ roomie.controller('MatchController',
 	
 	            MatchService.getTotalMatches($rootScope.currentUser.id).success(function (data) {
 	                $scope.loading = false;
-	                $scope.totalMatches = data;
+	                $rootScope.totalMatches = data;
+	                console.log(data);
+	            }).error(function (data) {
+	                console.log(data);
+	                $scope.loading = false;
+	            })
+	        };
+	        
+	        $scope.saveUserChoice = function(match) {
+	            $scope.loading = true;
+	
+	            if(!$rootScope.currentUser)
+	                return;
+	            
+        		match.from_user = $rootScope.currentUser,
+        		match.to_user = $scope.user,
+	
+	            MatchService.saveChoice($rootScope.currentUser.id, match).success(function (data) {
+	                $scope.loading = false;
+	                $scope.getNextSuggestion();
+	                $scope.getListOfMatches();
+	                $scope.getTotalMatches();
 	                console.log(data);
 	            }).error(function (data) {
 	                console.log(data);
@@ -125,12 +165,38 @@ roomie.controller('MatchController',
 	        	$scope.getListOfMatches();
             };
             
+            $scope.openContactDialog = function() {
+            	var modalInstance = $uibModal.open({
+            	      animation: true,
+            	      templateUrl: 'contactModal',
+            	      controller: 'ModalInstanceCtrl',
+//            	      size: size,
+            	      resolve: {
+            	    	  user_match: function () {
+            	    		  return $scope.user;
+            	    	  }
+            	      }
+            	});
+            };
+            
             $scope.positiveAnswer = function() {
-            	console.log("YES");
+            	
+            	var match = {
+            		interested: true
+            	}
+            	
+            	if($scope.match.interested_for_me)
+            		$scope.openContactDialog();
+            	$scope.saveUserChoice(match);
             };
             
             $scope.negativeAnswer = function() {
-            	console.log("NO");
+            	
+            	var match = {
+                	interested: false
+                }
+            	
+            	$scope.saveUserChoice(match);
             };
 
         }
