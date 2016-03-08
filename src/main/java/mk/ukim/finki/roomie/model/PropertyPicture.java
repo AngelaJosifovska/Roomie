@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -18,20 +18,20 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="profile_images")
-public class ProfileImage {
+@Table(name="property_pictures")
+public class PropertyPicture {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = true)
+	@Column(nullable = true, length = 50)
 	private String caption;
-	
-	@Column(nullable = true, length = 500)
-	private String description;
 	
 	@Column(nullable = false)
 	private String location;
+	
+	@Column(nullable = false)
+	private String thumb_location;
 	
 	@JsonIgnore
 	@Column(nullable = true)
@@ -46,9 +46,9 @@ public class ProfileImage {
 	private Date updated_at;
 	
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name = "for_user")
-	private User user;
+	@ManyToOne
+	@JoinColumn(name = "on_rental")
+	private RentalUnit rentalUnit;
 	
 	@PrePersist
 	public void onCreate(){
@@ -61,15 +61,15 @@ public class ProfileImage {
 		this.updated_at = new Date();
 	}
 
-	public ProfileImage() {
+	public PropertyPicture() {
 		super();
 	}
 
-	public ProfileImage(String caption, String description, String location) {
+	public PropertyPicture(String caption, String location, String thumb_location) {
 		super();
 		this.caption = caption;
-		this.description = description;
 		this.location = location;
+		this.thumb_location = thumb_location;
 	}
 
 	public Integer getId() {
@@ -88,20 +88,20 @@ public class ProfileImage {
 		this.caption = caption;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getLocation() {
 		return location;
 	}
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getThumb_location() {
+		return thumb_location;
+	}
+
+	public void setThumb_location(String thumb_location) {
+		this.thumb_location = thumb_location;
 	}
 
 	public String getMime_type() {
@@ -128,11 +128,11 @@ public class ProfileImage {
 		this.updated_at = updated_at;
 	}
 
-	public User getUser() {
-		return user;
+	public RentalUnit getRentalUnit() {
+		return rentalUnit;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setRentalUnit(RentalUnit rentalUnit) {
+		this.rentalUnit = rentalUnit;
 	}
 }

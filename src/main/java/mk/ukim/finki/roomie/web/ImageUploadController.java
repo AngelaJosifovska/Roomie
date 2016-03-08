@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mk.ukim.finki.roomie.model.ProfileImage;
+import mk.ukim.finki.roomie.model.PropertyPicture;
+import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
+import mk.ukim.finki.roomie.service.RentalUnitService;
 import mk.ukim.finki.roomie.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping(value = "public/api/User")
-public class ProfileImageController {
+@RequestMapping(value = "public/api/")
+public class ImageUploadController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RentalUnitService rentalUnitService;
 	
 	@ResponseBody
-    @RequestMapping(value = "/{id}/ProfileImage")
-    public User store(@PathVariable int id, @RequestParam(value = "photo") MultipartFile multipartFile, 
+    @RequestMapping(value = "User/{id}/ProfileImage")
+    public User storeProfileImage(@PathVariable int id, @RequestParam(value = "photo") MultipartFile multipartFile, 
     		HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IllegalStateException, IOException {
 
 		String base_path = httpServletRequest.getSession().getServletContext().getRealPath("/profile_images");
@@ -50,8 +55,7 @@ public class ProfileImageController {
 			profile_image.setUser(user);
 		} else {
 			File oldImage = new File(httpServletRequest.getSession().getServletContext().getRealPath(user.getProfile_image().getLocation().substring(8)));
-			System.out.println(oldImage);
-			System.out.println(oldImage.delete());
+			oldImage.delete();
 			
 			user.getProfile_image().setCaption(caption);
 			user.getProfile_image().setDescription(description);
@@ -64,5 +68,33 @@ public class ProfileImageController {
         multipartFile.transferTo(image_file);
 
         return user;
+    }
+	
+	@ResponseBody
+    @RequestMapping(value = "RentalUnit/{property_id}/PropertyPicture")
+    public RentalUnit storePropertyImage(@PathVariable int property_id, @RequestParam(value = "photo") MultipartFile multipartFile, 
+    		HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IllegalStateException, IOException {
+
+		String base_path = httpServletRequest.getSession().getServletContext().getRealPath("/property_images");
+        
+        File directory = new File(base_path + "/" + property_id);
+        if(!directory.exists()) {
+        	directory.mkdir();
+        }
+        
+        String fileName = new Date().getTime() + "_" + multipartFile.getOriginalFilename();
+		String caption = httpServletRequest.getParameter("caption");
+		String file_location = "/roomie/property_images/" + property_id + "/" + fileName;
+		
+		RentalUnit rentalUnit = rentalUnitService.getRentalUnitById(property_id);
+		PropertyPicture property_picture = new PropertyPicture(caption, file_location, file_location);
+		property_picture.setRentalUnit(rentalUnit);
+		rentalUnit.addPropertyPicture(property_picture);
+		rentalUnitService.storeRentalUnit(rentalUnit);
+		
+        File image_file = new File(directory + "/" + fileName);
+        multipartFile.transferTo(image_file);
+
+        return rentalUnit;
     }
 }
