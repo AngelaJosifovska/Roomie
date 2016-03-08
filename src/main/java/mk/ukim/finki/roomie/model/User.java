@@ -2,6 +2,7 @@ package mk.ukim.finki.roomie.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -70,6 +71,10 @@ public class User {
     @JsonManagedReference
     @OneToOne(mappedBy = "for_user", targetEntity = PersonalProfile.class)
     private PersonalProfile personal_profile;
+    
+    @JsonManagedReference
+    @OneToOne(mappedBy = "user", targetEntity = ProfileImage.class, cascade = CascadeType.ALL)
+    private ProfileImage profile_image;
    
     @PrePersist
     public void onCreate(){
@@ -202,7 +207,15 @@ public class User {
 		this.personal_profile = personal_profile;
 	}
    
-   	@Override
+   	public ProfileImage getProfile_image() {
+		return profile_image;
+	}
+
+	public void setProfile_image(ProfileImage profile_image) {
+		this.profile_image = profile_image;
+	}
+
+	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email
 				+ ", password=" + password + ", role=" + role
