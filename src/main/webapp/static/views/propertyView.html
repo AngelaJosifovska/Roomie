@@ -366,9 +366,9 @@
 
                         <div class="panel panel-default comment-box" ng-repeat="comment in comments">
                             <div class="panel-heading">
-                            	<img ng-src="images/default-male.png" ng-show="comment.user.personal_profile.gender == 'Male' && !comment.user.profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
-							    <img ng-src="images/default-female.png" ng-show="comment.user.personal_profile.gender == 'Female' && !comment.user.profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
-							    <img ng-src="{{ comment.user.profilePicture.location }}" ng-show="comment.user.profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
+                            	<img ng-src="images/default-male.png" ng-show="comment.user.personal_profile.gender == 'Male' && !comment.user.profile_image" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
+							    <img ng-src="images/default-female.png" ng-show="comment.user.personal_profile.gender == 'Female' && !comment.user.profile_image" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
+							    <img ng-src="{{ comment.user.profile_image.location }}" ng-show="comment.user.profile_image" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Comment user image" width="60" height="65">
                             
                                 <h4 style="display: inline-block">
                                 	<a href="{{ '#/userProfile/' + comment.user.id }}">{{ comment.user.name }}</a> <br />
