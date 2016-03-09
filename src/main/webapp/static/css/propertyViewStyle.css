@@ -58,3 +58,8 @@ span.info-text {
     padding-top: 4px;
     text-align: justify;
 }
+
+
+.angular-google-map-container { 
+	height: 450px;
+}

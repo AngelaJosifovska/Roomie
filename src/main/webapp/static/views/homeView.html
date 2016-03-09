@@ -16,6 +16,11 @@
         -ms-filter: blur(3px);
         filter: blur(3px);
     }
+    
+    
+	.angular-google-map-container { 
+		height: 600px;
+	}
 </style>
 
 <div id="firstSection" class="container">
@@ -78,3 +83,14 @@
     </div>
 
 </div>
+
+<!-- GOOGLE MAPS FOR ALL RENTAL UNIT LOCATIONS -->
+<div ng-controller="RentalUnitController">
+	<h1 class="" style="color: #DF691A;">Choose your favourite place to rent</h1>
+
+	<ui-gmap-google-map center='map.center' zoom='map.zoom' options="{ scrollwheel: false }">
+		<ui-gmap-markers models='rentalUnits' idKey="location.id" coords="'location'" options="{ title: address }"></ui-gmap-markers>
+	</ui-gmap-google-map>
+</div>
+
+

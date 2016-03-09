@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -71,45 +72,45 @@ public class RentalUnit {
 	@Column(nullable = false)
 	private String furniture;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean pets;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean private_bathroom;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean wifi;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean air_conditioning;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean cable;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean satellite;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean elevator;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean laundry;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean gym;
 	
-	@Column(nullable = false, columnDefinition = "default false")
+	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean doorman;
 	
-	@Column(nullable = false, columnDefinition = "default true")
+	@Column(nullable = false, columnDefinition = "boolean default true")
 	private boolean property_active;
 
 	@Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, insertable=true, updatable=false, columnDefinition = "default CURRENT_TIMESTAMP")
+    @Column(nullable = false, insertable=true, updatable=false, columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	private Date created_at;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, insertable=true, updatable=true, columnDefinition = "default CURRENT_TIMESTAMP")
+    @Column(nullable = false, insertable=true, updatable=true, columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	private Date updated_at;
 	
 	@JsonIgnore
@@ -119,6 +120,10 @@ public class RentalUnit {
 	
 	@OneToMany(mappedBy = "rentalUnit", targetEntity = PropertyPicture.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<PropertyPicture> property_picture;
+	
+	@OneToOne(targetEntity = Location.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(nullable = false)
+	private Location location;
 	
 	@PrePersist
 	public void onCreate(){
@@ -363,5 +368,13 @@ public class RentalUnit {
 		if(this.property_picture.isEmpty())
 			this.property_picture = new ArrayList<PropertyPicture>();
 		this.property_picture.add(property_picture);
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 }

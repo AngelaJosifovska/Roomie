@@ -7,6 +7,14 @@ roomie.controller('RentalUnitController',
 
         function($scope, $http, $state, $rootScope, $filter, $stateParams, $location, RentalUnitService)
         {
+    		$scope.map = { 
+    			center: { 
+    				latitude: 40.7127837, 
+    				longitude: -74.0059413
+    			}, 
+    			zoom: 11 
+    		};
+    	
             $scope.rentalUnits = [];
             $scope.property = {};
             //$scope.rentalUnitId = 1;
@@ -104,7 +112,6 @@ roomie.controller('RentalUnitController',
                     $scope.pagination.perPage = data.per_page;
                     $scope.rentalUnits = data.data;
                     console.log(data);
-                    //console.log($scope.rentalUnits);
                 }).error(function (data) {
                     console.log(data);
                     $scope.loading = false;
@@ -119,11 +126,15 @@ roomie.controller('RentalUnitController',
                 RentalUnitService.getSingle($stateParams.id).success(function(data) {
                     $scope.loading = false;
                     console.log($stateParams.id);
-                    // data is an object and should be converted to an array
-                    //$scope.rentalUnits = [data];
                     $scope.property = data;
                     $scope.property.move_in_from = new Date($scope.property.move_in_from);
                     $scope.photos = data.property_picture;
+                    
+                    //settings for the location
+                    $scope.map.center.latitude = $scope.property.location.latitude;
+                    $scope.map.center.longitude = $scope.property.location.longitude;
+                    $scope.map.zoom = 15;
+                    
                     console.log(data);
                 }).error(function(data) {
                     console.log(data);

@@ -8,7 +8,8 @@ var roomie = angular.module('roomie-app', [
     'angularMoment',
     'ui.bootstrap',
     'ngPasswordStrength',
-    'rzModule'
+    'rzModule',
+    'uiGmapgoogle-maps'
 ]);
 
 roomie.config(function($stateProvider, $urlRouterProvider) {
@@ -181,6 +182,17 @@ roomie.config(function($stateProvider, $urlRouterProvider, $authProvider, $httpP
     $httpProvider.interceptors.push('redirectWhenLoggedOut');
 
 });
+
+/**
+ * Google Maps configuration
+ */
+roomie.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyBWg3vxP5ZZiMLEeYZsH9ALLy8fK-oRIvs',
+        v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'weather,geometry,visualization'
+    });
+})
 
 
 roomie.run(function($rootScope, $state, editableOptions) {

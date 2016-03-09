@@ -301,6 +301,14 @@
             <artifactId>commons-fileupload</artifactId>
             <version>${commons-fileupload.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
+        
+        <!-- Google Maps service client -->
+        <dependency>
+		    <groupId>com.google.maps</groupId>
+		    <artifactId>google-maps-services</artifactId>
+		    <version>0.1.11</version>
+		</dependency>
+        
 
         <!-- Dandelion -->
         <dependency>

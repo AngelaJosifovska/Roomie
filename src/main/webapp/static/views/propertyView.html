@@ -315,11 +315,31 @@
             <div id="final-tg" class="row">
                 <div style="padding: 5px" class="col-sm-4" ng-repeat="photo in photos">
                     <a data-lightbox="gallery" data-title="{{ photo.caption }}" href="{{ photo.location }}">
-                        <img style="display: block; margin-left: auto; margin-right: auto;" class="img-thumbnail img-responsive" src="{{ photo.thumb_location }}" data-src="{{ photo.thumb_location }}" />
+                        <img style="display: block; margin-left: auto; margin-right: auto;" class="img-thumbnail img-responsive" src="{{ photo.location }}" data-src="{{ photo.location }}" />
                     </a>
                 </div>
             </div>
 
+
+            <div class="panel-footer" style="margin-top: 20px;">
+
+            </div>
+
+
+        </div>
+    </div>
+    
+    <!-- GOOGLE MAP LOCATION -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 style="display: inline-block">Location on map</h4>
+        </div>
+
+        <div class="panel-body">
+
+			<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+				<ui-gmap-marker idKey='property.location.id' coords='property.location' options='{ title: property.address }'></ui-gmap-marker>
+			</ui-gmap-google-map>
 
             <div class="panel-footer" style="margin-top: 20px;">
 

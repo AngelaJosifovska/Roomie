@@ -5,6 +5,7 @@ import java.util.List;
 import mk.ukim.finki.roomie.helper.HelperPaginatedResponse;
 import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
+import mk.ukim.finki.roomie.service.GoogleGeocoderService;
 import mk.ukim.finki.roomie.service.RentalUnitService;
 import mk.ukim.finki.roomie.service.UserService;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.maps.model.GeocodingResult;
+
 
 @RestController
 @RequestMapping(value = "public/api/RentalUnit")
@@ -26,6 +29,8 @@ public class RentalUnitController {
 	private RentalUnitService rentalUnitService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private GoogleGeocoderService geocoderService;
 	
 	/**
 	 * Display a listing of the resources
@@ -75,6 +80,18 @@ public class RentalUnitController {
 		User user=userService.getUserById(user_id);
 		rentalUnit.setUser(user);
 		return rentalUnitService.updateRentalUnit(rentalUnit);
+	}
+	
+	/**
+	 * Update the specified resource in storage.
+	 * 
+	 * @param id
+	 * @return 
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/example", method = RequestMethod.GET)
+	public @ResponseBody GeocodingResult example() throws Exception {
+		return geocoderService.getLocationFromAddress("1600 Amphitheatre Parkway", "Mountain View");
 	}
 
 }
