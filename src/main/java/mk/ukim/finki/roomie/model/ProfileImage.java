@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -45,7 +46,7 @@ public class ProfileImage {
     @Column(nullable = false, insertable = true, updatable = true, columnDefinition = "default CURRENT_TIMESTAMP")
 	private Date updated_at;
 	
-	@JsonIgnore
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "for_user")
 	private User user;

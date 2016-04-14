@@ -58,7 +58,11 @@ roomie.config(function($stateProvider, $urlRouterProvider) {
         .state('match', {
             url: '/match',
             templateUrl: 'views/matchView.html'
-        });
+        })
+    	.state('statistics', {
+    		url: '/statistics',
+    		templateUrl: 'views/statsView.html'
+    	});
 
 });
 

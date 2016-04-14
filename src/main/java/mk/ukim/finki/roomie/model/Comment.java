@@ -48,6 +48,12 @@ public class Comment {
 	@JoinColumn(name="on_rental")
 	private RentalUnit rentalUnit;
 	
+	@Column(insertable=false,updatable=false)
+	private Integer from_user;
+	
+	@Column(insertable=false,updatable=false)
+	private Integer on_rental;
+	
 	@PrePersist
 	public void onCreate(){
 		this.created_at = new Date();
@@ -108,5 +114,22 @@ public class Comment {
 	public RentalUnit getRentalUnit() {
 		return rentalUnit;
 	}
+
+	public Integer getFrom_user() {
+		return from_user;
+	}
+
+	public void setFrom_user(Integer from_user) {
+		this.from_user = from_user;
+	}
+
+	public Integer getOn_rental() {
+		return on_rental;
+	}
+
+	public void setOn_rental(Integer on_rental) {
+		this.on_rental = on_rental;
+	}
+	
 	
 }

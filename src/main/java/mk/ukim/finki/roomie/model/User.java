@@ -2,6 +2,7 @@ package mk.ukim.finki.roomie.model;
 
 import java.util.Date;
 
+import javax.persistence.Access;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +38,6 @@ public class User {
     @Column(nullable=false)
     private String email;
    
-    @JsonIgnore
     @Column(nullable = false)
     private String password;
    
@@ -122,12 +122,12 @@ public class User {
         this.email = email;
     }
     
-	@JsonIgnore
+	
     public String getPassword() {
         return password;
     }
     
-	@JsonProperty
+	
     public void setPassword(String password) {
         this.password = password;
     }

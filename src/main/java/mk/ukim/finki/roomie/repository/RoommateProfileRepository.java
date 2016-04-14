@@ -8,9 +8,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import mk.ukim.finki.roomie.model.PersonalProfile;
 import mk.ukim.finki.roomie.model.RoommateProfile;
+import mk.ukim.finki.roomie.model.User;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class RoommateProfileRepository {
@@ -30,4 +33,17 @@ public class RoommateProfileRepository {
 		
 		return query.getSingleResult();
 	}
+	
+	@Transactional
+	public User saveOrUpdate(RoommateProfile entity) {
+	    if (entity.getId() != null && !em.contains(entity)) {
+	      entity = em.merge(entity);
+	    } else {
+	      em.persist(entity);
+	    }
+	    em.flush();
+	    return entity.getFor_user();
+	}
+	
+	
 }

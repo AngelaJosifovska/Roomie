@@ -2,6 +2,7 @@ package mk.ukim.finki.roomie.service.implementation;
 
 import java.util.List;
 
+import mk.ukim.finki.roomie.helper.CategoryFrequency;
 import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.repository.RentalUnitRepository;
 import mk.ukim.finki.roomie.service.RentalUnitService;
@@ -37,6 +38,10 @@ public class RentalUnitServiceImpl implements RentalUnitService{
 
 	public Long getTotal() {
 		return rentalUnitRepository.getTotal();
+	}
+
+	public List<CategoryFrequency> rentalUnitsGroupBy(String category) {
+		return rentalUnitRepository.rentalUnitsGroupBy(category);	
 	}
 
 }

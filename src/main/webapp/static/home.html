@@ -27,12 +27,13 @@
 <!--    <link href="css/finalTilesGallery.css" rel="stylesheet">-->
     <link href="css/rzslider.min.css" rel="stylesheet">
     <link href="css/lightbox.css" rel="stylesheet">
-
+	
     <!-- Custom CSS -->
     <link href="css/main.css" rel="stylesheet">
     <link href="css/customSlider.css" rel="stylesheet">
     <link href="css/propertyViewStyle.css" rel="stylesheet">
     <link href="css/userViewStyle.css" rel="stylesheet">
+    <link href="css/d3_barchart.css" rel="stylesheet">
 
 </head>
 
@@ -55,6 +56,8 @@
             <li><a href="#/users">Find roommates</a></li>
             <li ng-controller="MatchController" ng-if="authenticated" ng-init="getTotalMatches()">
             	<a href="#/match">Find a match <span class="badge" style="margin-left: 5px">{{ totalMatches }}</span></a>
+            </li>
+            <li><a href="#/statistics">Statistics</a>
             </li>
         </ul>
 
@@ -120,8 +123,7 @@
     <script src="app/libraries/lodash.js"></script>
     <script src="app/libraries/angular-simple-logger.min.js"></script>
     <script src="app/libraries/angular-google-maps.min.js"></script>
-
-
+	
     <!-- load momentJS (required for angular-moment) -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
     <!-- load angular-moment -->
@@ -132,6 +134,19 @@
     <![endif]-->
     <script src="//cdn.jsdelivr.net/satellizer/0.13.4/satellizer.min.js"></script>
 
+    
+    <!-- Charts scripts -->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	
+    <script src="app/js/d3_circles.js"></script>
+    <script src="app/js/d3_interactive_pie.js"></script>
+    <script src="app/js/d3_barchart.js"></script>
+    <script src="app/js/highcharts_barchart.js"></script>
+    <script src="app/js/highcharts_donut.js"></script>
 
     <!-- Custom scripts -->
     <script src="app/app.js"></script>

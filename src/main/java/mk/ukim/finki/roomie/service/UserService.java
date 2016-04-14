@@ -2,6 +2,7 @@ package mk.ukim.finki.roomie.service;
 
 import java.util.List;
 
+import mk.ukim.finki.roomie.helper.CategoryFrequency;
 import mk.ukim.finki.roomie.model.User;
 
 public interface UserService extends org.springframework.security.core.userdetails.UserDetailsService{
@@ -19,5 +20,7 @@ public interface UserService extends org.springframework.security.core.userdetai
 	public User updateUser(User user);
 	
 	public User getUserByUsername(String username);
+	
+	public List<CategoryFrequency> usersGroupBy(String category);
 	
 }
