@@ -2,6 +2,7 @@ package mk.ukim.finki.roomie.service;
 
 import java.util.List;
 
+import mk.ukim.finki.roomie.helper.CategoryFrequency;
 import mk.ukim.finki.roomie.model.RentalUnit;
 
 
@@ -18,4 +19,8 @@ public interface RentalUnitService {
 	public RentalUnit storeRentalUnit(RentalUnit rentalUnit);
 	
 	public RentalUnit updateRentalUnit(RentalUnit rentalUnit);
+	
+	public List<CategoryFrequency> rentalUnitsGroupBy(String category);
+	
+	
 }

@@ -54,12 +54,12 @@ public class CommentController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{property_id}/Comment", method = RequestMethod.POST)
-	public @ResponseBody Comment store(@PathVariable int property_id, @RequestBody Comment comment, @RequestParam int user_id) {
+	public @ResponseBody Comment store(@RequestBody Comment comment) {
 		
-		RentalUnit property=rentalUnitService.getRentalUnitById(property_id);		
+		RentalUnit property=rentalUnitService.getRentalUnitById(comment.getOn_rental());		
 		comment.setRentalUnit(property);
 		
-		User user=userService.getUserById(user_id);
+		User user=userService.getUserById(comment.getFrom_user());
 		comment.setUser(user);
 		
 		return commentService.storeComment(comment);		

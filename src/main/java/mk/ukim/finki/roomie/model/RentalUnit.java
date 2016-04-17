@@ -37,6 +37,9 @@ public class RentalUnit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	
 	
+	@Column(insertable=false,updatable=false)
+	private Integer user_id;
+	
 	@Column(nullable = false)
 	private String type;	
 	
@@ -377,4 +380,15 @@ public class RentalUnit {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+
+	public Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
+	}
+
+	
+	
 }

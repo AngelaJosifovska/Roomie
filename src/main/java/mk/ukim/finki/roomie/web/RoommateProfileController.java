@@ -5,13 +5,18 @@ import java.util.List;
 
 import mk.ukim.finki.roomie.model.RoommateProfile;
 import mk.ukim.finki.roomie.service.RoommateProfileService;
+import mk.ukim.finki.roomie.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mk.ukim.finki.roomie.model.User;
 
 
+
+
+
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoommateProfileController {
 	
 	@Autowired
-	private RoommateProfileService roommateProfileService;
+	RoommateProfileService roommateProfileService;
+	
+	@Autowired
+	UserService userService;
 	
 	/**
 	 * Display a listing of the resources
@@ -44,10 +52,10 @@ public class RoommateProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody User store() {
-		// TODO: Implement the method: @RequestBody for User in the method parameters
-		User unit = new User();
-		return unit;
+	public @ResponseBody User store(@RequestBody RoommateProfile roommateProfile) {
+		roommateProfile.setFor_user(userService.getUserById(roommateProfile.getUser_id()));
+		System.out.println("personal profile post "+ roommateProfile);
+		return roommateProfileService.storeRoomateProfile(roommateProfile);	
 	}
 	
 	/**
@@ -68,9 +76,10 @@ public class RoommateProfileController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody User update(@PathVariable int id) {
-		// TODO: Implement the method: @RequestBody for User in the method parameters
-		User unit = new User();
-		return unit;
+	public @ResponseBody User update(@PathVariable int id, @RequestBody RoommateProfile roommateProfile) {
+
+		roommateProfile.setFor_user(userService.getUserById(roommateProfile.getUser_id()));
+		System.out.println("personal profile post "+ roommateProfile);
+		return roommateProfileService.storeRoomateProfile(roommateProfile);	
 	}
 }

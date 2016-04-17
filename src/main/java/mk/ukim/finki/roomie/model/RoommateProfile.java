@@ -26,9 +26,12 @@ public class RoommateProfile {
     private Integer id;
    
 	@JsonBackReference
-	@OneToOne(optional = false, targetEntity = User.class, cascade = CascadeType.ALL)
+	@OneToOne(optional = false, targetEntity = User.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "for_user", nullable = false, referencedColumnName = "id")
     private User for_user;
+	
+	@Column(insertable=false,updatable=false)
+	private Integer user_id;
 	
 	@Column(nullable = true)
     private Integer cleanliness;
@@ -84,7 +87,7 @@ public class RoommateProfile {
     private Date created_at;
    
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, insertable = false, updatable = true, columnDefinition = "default CURRENT_TIMESTAMP")
+    @Column(nullable = false, insertable = true, updatable = true, columnDefinition = "default CURRENT_TIMESTAMP")
     private Date updated_at;
     
 	@PrePersist
@@ -269,6 +272,16 @@ public class RoommateProfile {
 	public Date getUpdated_at() {
 		return updated_at;
 	}
+
+	public Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
+	}
+	
+	
 
 //	public void setUpdated_at(Timestamp updated_at) {
 //		this.updated_at = updated_at;

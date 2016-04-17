@@ -21,8 +21,8 @@ roomie.factory('CommentService', function($http) {
                 url: '/roomie/public/api/RentalUnit/' + property_id + '/Comment',
                 method: "POST",
                 //Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(comment_obj)
+                headers: { 'Content-Type' : 'application/json' },
+                data: comment_obj
             });
         },
 

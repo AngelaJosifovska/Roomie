@@ -26,8 +26,8 @@ roomie.factory('ProfileService', function($http, $rootScope) {
                 url: '/roomie/public/api/PersonalProfile/' + $rootScope.currentUser.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(profileData)
+                headers: { 'Content-Type' : 'application/json' },
+                data: profileData
             });
         },
 
@@ -36,8 +36,8 @@ roomie.factory('ProfileService', function($http, $rootScope) {
                 url: '/roomie/public/api/PersonalProfile',
                 method: "POST",
                 // Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(profileData)
+                headers: { 'Content-Type' : 'application/json' },
+                data: profileData
             });
         },
 
@@ -55,8 +55,8 @@ roomie.factory('ProfileService', function($http, $rootScope) {
                 url: '/roomie/public/api/RoommateProfile/' + $rootScope.currentUser.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(profileData)
+                headers: { 'Content-Type' : 'application/json' },
+                data: profileData
             });
         },
 
@@ -65,8 +65,8 @@ roomie.factory('ProfileService', function($http, $rootScope) {
                 url: '/roomie/public/api/RoommateProfile',
                 method: "POST",
                 // Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(profileData)
+                headers: { 'Content-Type' : 'application/json' },
+                data: profileData
             });
         },
 
@@ -75,8 +75,8 @@ roomie.factory('ProfileService', function($http, $rootScope) {
                 url: '/roomie/public/api/User/' + $rootScope.currentUser.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(userData)
+                headers: { 'Content-Type' : 'application/json' },
+                data: userData
             });
         }
 

@@ -1,5 +1,6 @@
 package mk.ukim.finki.roomie.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import mk.ukim.finki.roomie.helper.CategoryFrequency;
 import mk.ukim.finki.roomie.model.User;
 import mk.ukim.finki.roomie.model.enums.RegistrationStatus;
 
@@ -97,6 +99,21 @@ public class UserRepository {
 	    }
 	    em.flush();
 	    return entity;
+	}
+	
+	public List<CategoryFrequency> usersGroupBy(String category){
+		  CriteriaBuilder cb = em.getCriteriaBuilder();
+		  CriteriaQuery<Object[]> q = cb.createQuery(Object[].class);
+		  Root<User> c = q.from(User.class);
+		  q.multiselect(c.get(category), cb.count(c.get(category)));
+		  q.groupBy(c.get(category));
+		  List<Object[]> result = em.createQuery(q).getResultList();
+		  List<CategoryFrequency> converted = new ArrayList<CategoryFrequency>();
+		  for (Object[] objects : result) {
+			 CategoryFrequency cf=new CategoryFrequency(objects[0].toString(),(Long)objects[1]);
+			 converted.add(cf);
+		  }
+		  return converted;	  
 	}
 
 

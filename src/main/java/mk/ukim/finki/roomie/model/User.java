@@ -38,8 +38,8 @@ public class User {
     @Column(nullable=false)
     private String email;
    
-    @JsonProperty(access = Access.WRITE_ONLY)
     @Column(nullable = false)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
    
     @Column(nullable=false, columnDefinition = "default 'user'")
@@ -122,7 +122,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getPassword() {
         return password;
     }
@@ -169,9 +169,6 @@ public class User {
     }
     
     public Date getCreated_at() {
-//    	SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		String formated = format.format(created_at);
-//		return formated;
         return created_at;
     }
     
@@ -180,9 +177,6 @@ public class User {
     }
     
     public Date getUpdated_at() {
-//    	SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		String formated = format.format(updated_at);
-//		return formated;
         return updated_at;
     }
     

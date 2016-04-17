@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,8 @@ public class AuthenticationController {
 	UserService userService;
 	@Autowired
 	TokenAuthenticationService tokenAuthenticationService;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Object> authenticate(@RequestBody Credentials credentials, HttpServletResponse response){
@@ -34,7 +37,9 @@ public class AuthenticationController {
 	        try {
 	            user = (User) userService.loadUserByUsername(credentials.getEmail());
 	            mk.ukim.finki.roomie.model.User origUser = userService.getUserByUsername(credentials.getEmail());
-	            if(credentials.getPassword().equals(user.getPassword())){
+	            System.out.println(passwordEncoder);
+	            //if(credentials.getPassword().equals(user.getPassword())){
+	            if(passwordEncoder.matches(credentials.getPassword(), user.getPassword())){
 	            	UserAuthentication authentication=new UserAuthentication(user,origUser);
 	            	String token=tokenAuthenticationService.addAuthentication(response, authentication);
 	            	HashMap<String,String> obj=new HashMap<String,String>();

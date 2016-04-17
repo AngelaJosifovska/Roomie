@@ -2,7 +2,9 @@ package mk.ukim.finki.roomie.web;
 
 import java.util.List;
 
+import mk.ukim.finki.roomie.helper.CategoryFrequency;
 import mk.ukim.finki.roomie.helper.HelperPaginatedResponse;
+import mk.ukim.finki.roomie.model.Location;
 import mk.ukim.finki.roomie.model.RentalUnit;
 import mk.ukim.finki.roomie.model.User;
 import mk.ukim.finki.roomie.service.GoogleGeocoderService;
@@ -52,9 +54,12 @@ public class RentalUnitController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody RentalUnit store(@RequestParam int user_id, @RequestBody RentalUnit rentalUnit) {
-		User user=userService.getUserById(user_id);
+	public @ResponseBody RentalUnit store(@RequestBody RentalUnit rentalUnit) {
+		User user=userService.getUserById(rentalUnit.getUser_id());
 		rentalUnit.setUser(user);
+		GeocodingResult result = geocoderService.getLocationFromAddress(rentalUnit.getAddress(), rentalUnit.getCity());
+		Location location=new Location(result.geometry.location.lat, result.geometry.location.lng);
+		rentalUnit.setLocation(location);
 		return rentalUnitService.storeRentalUnit(rentalUnit);
 	}
 	
@@ -76,9 +81,12 @@ public class RentalUnitController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public @ResponseBody RentalUnit update(@PathVariable int id, @RequestParam int user_id, @RequestBody RentalUnit rentalUnit) {
-		User user=userService.getUserById(user_id);
+	public @ResponseBody RentalUnit update(@PathVariable int id,@RequestBody RentalUnit rentalUnit) {
+		User user=userService.getUserById(rentalUnit.getUser_id());
 		rentalUnit.setUser(user);
+		GeocodingResult result = geocoderService.getLocationFromAddress(rentalUnit.getAddress(), rentalUnit.getCity());
+		Location location=new Location(result.geometry.location.lat, result.geometry.location.lng);
+		rentalUnit.setLocation(location);
 		return rentalUnitService.updateRentalUnit(rentalUnit);
 	}
 	
@@ -92,6 +100,25 @@ public class RentalUnitController {
 	@RequestMapping(value = "/example", method = RequestMethod.GET)
 	public @ResponseBody GeocodingResult example() throws Exception {
 		return geocoderService.getLocationFromAddress("1600 Amphitheatre Parkway", "Mountain View");
+	}
+	/**
+	 * Group by category (any property of the rental unit)
+	 * @param category
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/groupby/{category}", method = RequestMethod.GET)
+	public @ResponseBody List<CategoryFrequency> groupby(@PathVariable String category) throws Exception {
+		  return rentalUnitService.rentalUnitsGroupBy(category);	  
+	}
+	
+	/**
+	 * 
+	 * @return total number of rental unirs
+	 */
+	@RequestMapping(value = "/total", method = RequestMethod.GET)
+	public @ResponseBody Long total() {
+		  return rentalUnitService.getTotal();  
 	}
 
 }

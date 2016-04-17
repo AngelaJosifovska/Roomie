@@ -3,6 +3,7 @@ package mk.ukim.finki.roomie.service.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import mk.ukim.finki.roomie.helper.CategoryFrequency;
 import mk.ukim.finki.roomie.model.User;
 import mk.ukim.finki.roomie.repository.UserRepository;
 import mk.ukim.finki.roomie.service.UserService;
@@ -77,6 +78,10 @@ public class UserServiceImpl implements UserService {
 
 	public User getUserByUsername(String username) {
 		return userRepository.getUserByEmail(username);
+	}
+
+	public List<CategoryFrequency> usersGroupBy(String category) {
+		return null;
 	}
     
 

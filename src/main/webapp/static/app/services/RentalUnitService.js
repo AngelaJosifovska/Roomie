@@ -30,8 +30,8 @@ roomie.factory('RentalUnitService', function($http) {
                 url: '/roomie/public/api/RentalUnit/' + rental_unit.id,
                 method: "PUT",
                 // Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(rental_unit)
+                headers: { 'Content-Type' : 'application/json' },
+                data: rental_unit
             });
         },
 
@@ -40,8 +40,8 @@ roomie.factory('RentalUnitService', function($http) {
                 url: '/roomie/public/api/RentalUnit',
                 method: "POST",
                 // Necessary to indicate that the sent data is JSON
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(propertyData)
+                headers: { 'Content-Type' : 'application/json' },
+                data: propertyData
             });
         }
 
