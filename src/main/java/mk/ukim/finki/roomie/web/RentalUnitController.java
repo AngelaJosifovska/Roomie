@@ -60,6 +60,7 @@ public class RentalUnitController {
 		GeocodingResult result = geocoderService.getLocationFromAddress(rentalUnit.getAddress(), rentalUnit.getCity());
 		Location location=new Location(result.geometry.location.lat, result.geometry.location.lng);
 		rentalUnit.setLocation(location);
+		
 		return rentalUnitService.storeRentalUnit(rentalUnit);
 	}
 	
@@ -87,7 +88,9 @@ public class RentalUnitController {
 		GeocodingResult result = geocoderService.getLocationFromAddress(rentalUnit.getAddress(), rentalUnit.getCity());
 		Location location=new Location(result.geometry.location.lat, result.geometry.location.lng);
 		rentalUnit.setLocation(location);
-		return rentalUnitService.updateRentalUnit(rentalUnit);
+		RentalUnit ru =  rentalUnitService.updateRentalUnit(rentalUnit);
+		System.out.println(ru.toString());
+		return ru;
 	}
 	
 	/**

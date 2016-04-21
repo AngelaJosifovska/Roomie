@@ -15,7 +15,9 @@ public class RoommateProfileServiceImpl implements RoommateProfileService {
 	private RoommateProfileRepository roomateProfileRepository;
 
 	public RoommateProfile getSingleRoommateProfile(int userID) {
-		return roomateProfileRepository.findByUserID(userID);
+		RoommateProfile rp = roomateProfileRepository.findByUserID(userID);
+		rp.setUser_id(userID);
+		return rp;
 	}
 
 	public User storeRoomateProfile(RoommateProfile roommateProfile) {

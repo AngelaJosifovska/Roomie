@@ -12,6 +12,8 @@ public interface UserService extends org.springframework.security.core.userdetai
 	public List<User> getAllUsers();
 	
     public List<User> getAllUsers(int page, int maxResults);
+    
+    public int getNumberOfNewUsers();
 	
 	public Long getTotal();
 	

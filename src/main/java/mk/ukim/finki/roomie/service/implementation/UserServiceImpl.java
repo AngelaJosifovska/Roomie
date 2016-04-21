@@ -83,6 +83,11 @@ public class UserServiceImpl implements UserService {
 	public List<CategoryFrequency> usersGroupBy(String category) {
 		return null;
 	}
+
+	public int getNumberOfNewUsers() {
+		// TODO Auto-generated method stub
+		return userRepository.numberOfNewUsers();
+	}
     
 
 }

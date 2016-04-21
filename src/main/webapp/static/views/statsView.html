@@ -45,9 +45,9 @@ $.get( "http://localhost:8080/roomie/public/api/PersonalProfile/groupby/relation
 		  function( data ) {
 	    addBarchart(data,"barchart2","second");
 		});
-$.get( "http://localhost:8080/roomie/public/api/PersonalProfile/groupby/location", 
+$.get( "http://localhost:8080/roomie/public/api/PersonalProfile/groupby/hometown", 
 		  function( data ) {
-			drawPie("Pie1", data, "#pie_chart_1 .chart", "colorScale20", 10, 120, 5, 0);
+			drawPie("Pie1", data, "#pie_chart_1 .chart", "colorScale20c", 10, 120, 5, 0);
 		});		
 		
 
@@ -86,12 +86,15 @@ $.get( "http://localhost:8080/roomie/public/api/PersonalProfile/groupby/location
            
             <div class="panel panel-default" >
                 <div class="panel-heading">
-					<h4>Users by location</h4>
+					<h4>Users by hometown</h4>
                 </div>
 
                 <div class="panel-body">
              		<div id="pie_chart_1" style="width:60%; margin:auto;">
               			<div class="chart"></div>
+              			<span style="float:right;font-size:8px;">
+              			Created by Frank Guerino : "http://www.guerino.net"
+              			</span>
            			 </div>
                 </div>
 			</div>

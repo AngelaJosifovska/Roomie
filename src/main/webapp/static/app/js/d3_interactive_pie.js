@@ -2,20 +2,10 @@
   // This example lays out multiple interactive pie charts on a page with multiple HTML layout constructs.
   // Created by Frank Guerino : "http://www.guerino.net"
 
-  // Data Used for this example...
-  var dataSet1 = [
-    {category: "Legend String 1", num: 51},
-    {category: "Legend String 2", num: 21},
-    {category: "Legend String 3", num: 31},
-    {category: "Legend String 4", num: 14},
-    {category: "Legend String 5", num: 19},
-    {category: "Legend String 6", num: 47},
-    {category: "Legend String 7", num: 27}];
-
 
   function drawPie( pieName, dataSet, selectString, colors, margin, outerRadius, innerRadius, sortArcs ) {
 
-    var colorScale = d3.scale.category20c();
+    var colorScale = d3.scale.category10();
     switch (colors)
     {
       case "colorScale10":

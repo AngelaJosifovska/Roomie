@@ -111,7 +111,7 @@ roomie.controller('RentalUnitController',
                     $scope.pagination.totalItems = data.total;
                     $scope.pagination.perPage = data.per_page;
                     $scope.rentalUnits = data.data;
-                    console.log(data);
+                    //console.log(data);
                 }).error(function (data) {
                     console.log(data);
                     $scope.loading = false;
@@ -127,6 +127,8 @@ roomie.controller('RentalUnitController',
                     $scope.loading = false;
                     console.log($stateParams.id);
                     $scope.property = data;
+                    //console.log($scope.property);
+                    //console.log($scope.property.location.id);
                     $scope.property.move_in_from = new Date($scope.property.move_in_from);
                     $scope.photos = data.property_picture;
                     
@@ -135,7 +137,7 @@ roomie.controller('RentalUnitController',
                     $scope.map.center.longitude = $scope.property.location.longitude;
                     $scope.map.zoom = 15;
                     
-                    console.log(data);
+                    //console.log(data);
                 }).error(function(data) {
                     console.log(data);
                     $scope.loading = false;
@@ -148,10 +150,25 @@ roomie.controller('RentalUnitController',
                     return;
 
                 $scope.loading = true;
-                //alert($scope.property);
+                
                 $scope.property.move_in_from = $scope.property.move_in_from.toISOString().slice(0, 10);
-
-                RentalUnitService.saveProperty($scope.property).success(function (data) {
+                function replacer(key,value)
+                {
+                    if (key=="user") return undefined;
+                    else if (key=="location") return undefined;
+                    else if (key=="property_picture") return undefined;
+                    else if (key=="updated_at") return undefined;
+                    else if (key=="private_bathroom"){
+                    	if(value==1)return true;
+                    	else return false;
+                    }else if (key=="created_at"){
+                    	return value.substring(0,9);
+                    }
+                    else return value;
+                }
+                var result = JSON.stringify($scope.property, replacer);
+                var propertyNew = JSON.parse(result);
+                RentalUnitService.saveProperty(propertyNew).success(function (data) {
                     $scope.loading = false;
                     $scope.getSingleRentalUnit();
                     //$scope.property = data;
@@ -170,6 +187,7 @@ roomie.controller('RentalUnitController',
                 $scope.property.user_id = $rootScope.currentUser.id;
                 $scope.property.move_in_from = $scope.property.move_in_from.toISOString().slice(0, 10);
 
+                //console.log($scope.property);
                 RentalUnitService.createNewProperty($scope.property).success(function (data) {
                     $scope.loading = false;
                     $state.go('propertyPage', { id: data.id });

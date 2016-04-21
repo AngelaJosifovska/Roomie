@@ -6,7 +6,7 @@
     <img ng-src="{{ profilePicture.location }}" ng-show="profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Profile image" width="120" height="130">
 
 
-    <button type="button" class="btn btn-danger" style="float: right" ng-show="authenticated && currentUser.id == profile.id" ng-click="toggleActivation()">
+    <button type="button" class="btn btn-danger" style="float: right" ng-show="authenticated && currentUser.id == profile.user_id" ng-click="toggleActivation()">
         <span ng-show="user.profile_active == 1">Deactivate account</span>
         <span ng-show="user.profile_active == 0">Activate account</span>
     </button>
@@ -20,8 +20,8 @@
 
     <!-- UPLOAD PROFILE PICTURE -->
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#photoUpload" ng-show="authenticated && currentUser.id == profile.id">Change profile picture</button>
-    <div style="margin-top: 70px" ng-show="!authenticated || currentUser.id != profile.id"></div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#photoUpload" ng-show="authenticated && currentUser.id == profile.user_id">Change profile picture</button>
+    <div style="margin-top: 70px" ng-show="!authenticated || currentUser.id != profile.user_id"></div>
 
     <!-- Modal -->
     <form id="photoUpload" class="modal fade" role="dialog" ng-controller="FileUploadController">
@@ -77,7 +77,7 @@
         </div>
     </form>
 
-    <div class="well well-sm" style="margin-top: 40px; width: 40%; padding: 10px 20px; border-radius: 5px" ng-show="currentUser.id != profile.id">Contact me on <a href="mailto:{{ user.email }}?Subject=I%20want%20to%20be%20your%20roommate" target="_top">{{ user.email }}</a></div>
+    <div class="well well-sm" style="margin-top: 40px; width: 40%; padding: 10px 20px; border-radius: 5px" ng-show="currentUser.id != profile.user_id">Contact me on <a href="mailto:{{ user.email }}?Subject=I%20want%20to%20be%20your%20roommate" target="_top">{{ user.email }}</a></div>
 
     <!-- PERSONAL PROFILE INFORMATION -->
     <div class="panel-group" style="margin-top: 40px; clear: both">
@@ -86,7 +86,7 @@
                 <div class="panel-heading">
                     <h4 style="display: inline-block">Personal Information</h4>
 
-                    <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == profile.id">
+                    <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == profile.user_id">
                         <!-- button to show form -->
                         <button type="button" class="btn btn-default" ng-click="profileForm.$show()" ng-show="!profileForm.$visible">
                             <i class="fa fa-pencil fw"></i>
@@ -201,7 +201,7 @@
                 <div class="panel-heading">
                     <h4 style="display: inline-block">Roommate Information</h4>
 
-                    <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == profile.id">
+                    <span class="buttons" style="float: right; margin-right: 10px;" ng-show="authenticated && currentUser.id == profile.user_id">
                         <!-- button to show form -->
                         <button type="button" class="btn btn-default" ng-click="profileForm.$show()" ng-show="!profileForm.$visible">
                             <i class="fa fa-pencil fw"></i>

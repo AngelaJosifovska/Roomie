@@ -265,25 +265,26 @@ function loadLiquidFillGauge(elementId, value, config) {
 function setup_graphics(){
 	
     var config1 = liquidFillGaugeDefaultSettings();
-    config1.circleColor = "#FF7777";
-    config1.textColor = "#FF4444";
+    config1.circleColor = "#39ac73";
+    config1.textColor = " #339966";
     config1.waveTextColor = "#FFAAAA";
-    config1.waveColor = "#FFDDDD";
+    config1.waveColor = "#b3e6cc";
     config1.circleThickness = 0.2;
     config1.textVertPosition = 0.8;
     config1.waveAnimateTime = 2000;
 	config1.waveCount = 3;
 	config1.waveHeight = 0.05;
-	$.get( "http://localhost:8080/roomie/public/api/PersonalProfile/female", 
+    config1.displayPercent = false;
+	$.get( "http://localhost:8080/roomie/public/api/User/newUsers", 
 			  function( data ) {
 				 loadLiquidFillGauge("fillgauge2", data, config1);
 			});
 
     var config2 = liquidFillGaugeDefaultSettings();
-    config2.circleColor = "#248f24";
-    config2.textColor = "#1f7a1f";
-    config2.waveTextColor = "#1f7a1f";
-    config2.waveColor = " #85e085";
+    config2.circleColor = "#80aaff";
+    config2.textColor = " #6699ff";
+    config2.waveTextColor = " #ccddff";
+    config2.waveColor = "#b3b3e6";
     config2.circleThickness = 0.2;
     config2.circleFillGap = 0.18;
     config2.textVertPosition = 0.8;
@@ -300,8 +301,8 @@ function setup_graphics(){
     var config3 = liquidFillGaugeDefaultSettings();
     config3.textVertPosition = 0.8;
     config3.waveAnimateTime = 5000;
-    config3.circleColor = " #e65c00";
-    config3.textColor = "#e65c00";
+    config3.circleColor = "#ff8533";
+    config3.textColor = "#ff751a";
     config3.waveTextColor = "#ff8000";
     config3.waveColor = "#ffd9b3";
     config3.waveHeight = 0.15;

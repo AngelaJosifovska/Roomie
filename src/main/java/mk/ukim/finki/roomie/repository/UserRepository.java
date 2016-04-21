@@ -1,6 +1,8 @@
 package mk.ukim.finki.roomie.repository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -65,6 +67,25 @@ public class UserRepository {
 	    TypedQuery<User> query = em.createQuery(cq);
 
 	    return query.getResultList();
+	}
+	public int numberOfNewUsers(){
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+	    CriteriaQuery<User> cq = cb.createQuery(User.class);
+	    final Root<User> root = cq.from(User.class);
+	    
+	    Predicate ifActive = cb.equal(root.get("profile_active"), true);
+	    Predicate ifComplete = cb.equal(root.get("registration_status"), RegistrationStatus.complete);
+	    Calendar cal = Calendar.getInstance();
+	    cal.add(Calendar.DAY_OF_MONTH, -30);
+	    Date monthAgo=cal.getTime();
+	    Predicate ifNew = cb.greaterThanOrEqualTo(root.<Date>get("created_at"), monthAgo);
+	    
+	    cq.where(ifActive, ifComplete, ifNew);
+
+	    TypedQuery<User> query = em.createQuery(cq);
+
+	    List<User> users= query.getResultList();
+	    return users.size();
 	}
 	
 	public List<User> findAll(int page, int maxResults){

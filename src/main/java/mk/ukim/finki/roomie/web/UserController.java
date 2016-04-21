@@ -95,7 +95,14 @@ public class UserController {
 		  return userService.getTotal();  
 	}
 	
-	
+	/**
+	 * 
+	 * @return number of new users (registered in the last 30 days)
+	 */
+	@RequestMapping(value = "/newUsers", method = RequestMethod.GET)
+	public @ResponseBody int getNewUsers(){
+		  return userService.getNumberOfNewUsers();
+	}
 	
 
 }

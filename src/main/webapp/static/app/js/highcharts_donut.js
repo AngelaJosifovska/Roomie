@@ -9,7 +9,6 @@ function addDonut(divId,allData,category,colors_array){
             },
             backgroundColor:'transparent'
         },
-        colors: colors_array,
         title: {
             text: 'Properties by '+category,
             style:{

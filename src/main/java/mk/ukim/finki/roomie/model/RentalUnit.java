@@ -116,14 +116,16 @@ public class RentalUnit {
     @Column(nullable = false, insertable=true, updatable=true, columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	private Date updated_at;
 	
-	@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "rentalUnit", targetEntity = PropertyPicture.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<PropertyPicture> property_picture;
 	
+
 	@OneToOne(targetEntity = Location.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Location location;
@@ -349,12 +351,10 @@ public class RentalUnit {
 		this.updated_at = updated_at;
 	}
 	
-	@JsonProperty
 	public User getUser() {
 		return user;
 	}
 	
-	@JsonIgnore
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -373,18 +373,21 @@ public class RentalUnit {
 		this.property_picture.add(property_picture);
 	}
 
+	
 	public Location getLocation() {
 		return location;
 	}
 
+	
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-
+	@JsonProperty
 	public Integer getUser_id() {
 		return user_id;
 	}
-
+	
+	@JsonIgnore
 	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
 	}

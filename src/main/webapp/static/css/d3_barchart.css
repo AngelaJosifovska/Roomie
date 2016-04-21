@@ -1,24 +1,27 @@
 
 .axis path,
-.axis line {
+.axis line {	
   fill: none;
-  stroke: #000;
+  stroke: white;
   shape-rendering: crispEdges;
+}
+.axis text{
+	fill:white;
 }
 
 .first{
-  fill: #ff8533;
+  fill:  #99bbff;
 }
 
 .first:hover {
-  fill: #cc2900 ;
+  fill:   #6699ff;
 }
 .second{
-  fill:#66ff66;
+  fill: #ffb366;
 }
 
 .second:hover {
-  fill:  #0f3d0f;
+  fill: #ff9933;
 }
 
 .x.axis path {
