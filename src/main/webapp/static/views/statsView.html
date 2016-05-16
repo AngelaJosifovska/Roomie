@@ -4,15 +4,27 @@
         display: block;
       }
       .highcharts{
-      margin:auto;
-      width:80%;
+	      margin:auto;
+	      width:80%;
       }
       .donut{
-      width:45%;
-      margin:auto;
-      display:inline-block;
-      float:left;
+	      width:45%;
+	      margin:auto;
+	      display:inline-block;
+	      float:left;
       }
+      .panel-default {
+      	margin-bottom: 40px !important;
+    	border-radius: 10px !important;
+      }
+      .panel-heading {
+      	color: #df691a !important;
+      	font-weight: bold !important;
+      }
+      .panel-heading {
+	    border-top-left-radius: 10px !important;
+	    border-top-right-radius: 10px !important;
+	}
 </style>
 <script>
 $.get( "http://localhost:8080/roomie/public/api/RentalUnit/groupby/city", 
