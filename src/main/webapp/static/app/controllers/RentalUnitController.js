@@ -185,6 +185,7 @@ roomie.controller('RentalUnitController',
 
                 $scope.loading = true;
                 $scope.property.user_id = $rootScope.currentUser.id;
+                $scope.property.property_active = true;
                 $scope.property.move_in_from = $scope.property.move_in_from.toISOString().slice(0, 10);
 
                 //console.log($scope.property);
