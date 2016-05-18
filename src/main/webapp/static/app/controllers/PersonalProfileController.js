@@ -58,7 +58,7 @@ roomie.controller('PersonalProfileController',
 
                 if(!$rootScope.currentUser)
                     return;
-
+                console.log($scope.user);
                 $scope.loading = true;
 
                 ProfileService.saveUser($scope.user).success(function (data) {
@@ -84,8 +84,9 @@ roomie.controller('PersonalProfileController',
                     $scope.loading = false;
                     $scope.user = data;
                     $scope.profile = data.personal_profile;
+                    $scope.profile.user_id = data.id;
                     $scope.profilePicture = data.profile_image;
-                    //console.log(data);
+                    console.log($scope.profile);
                 }).error(function (data) {
                     console.log(data);
                     $scope.loading = false;
@@ -105,7 +106,7 @@ roomie.controller('PersonalProfileController',
 
                 ProfileService.saveMyPersonalProfile($scope.profile).success(function (data) {
                     $scope.loading = false;
-                    $scope.profile = data;
+                    $scope.profile = data.personal_profile;
                     console.log(data);
                 }).error(function (data) {
                     console.log(data);
@@ -119,7 +120,9 @@ roomie.controller('PersonalProfileController',
                     return;
 
                 $scope.loading = true;
-                $scope.profile.for_user = $rootScope.currentUser.id;
+                $scope.profile.user_id = $rootScope.currentUser.id;
+                
+                console.log($scope.profile);
 
                 ProfileService.createMyPersonalProfile($scope.profile).success(function (data) {
                     $scope.loading = false;
@@ -150,3 +153,4 @@ roomie.controller('PersonalProfileController',
         }
 
     ]);
+//change because of github proble
