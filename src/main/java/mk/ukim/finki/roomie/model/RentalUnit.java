@@ -121,7 +121,6 @@ public class RentalUnit {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "rentalUnit", targetEntity = PropertyPicture.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<PropertyPicture> property_picture;
 	

@@ -14,9 +14,9 @@
 	    	</h3>
 	    
 	    	<div ng-show="match.potential_user != null">
-		    	<img ng-src="images/default-male.png" ng-show="p_profile.gender == 'Male' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
-	    		<img ng-src="images/default-female.png" ng-show="p_profile.gender == 'Female' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
-	    		<img ng-src="{{ profilePicture.location }}" ng-show="profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
+		    	<img ng-src="images/default-male.png" ng-show="p_profile.gender == 'Male' && !user.profile_image" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
+	    		<img ng-src="images/default-female.png" ng-show="p_profile.gender == 'Female' && !user.profile_image" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
+	    		<img ng-src="{{ user.profile_image.location }}" ng-show="user.profile_image" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="p_profile image" width="120" height="130">
 		    	
 		    	
 		    	<!-- SAVING THE CHOICE -->

@@ -1,9 +1,21 @@
 
 <!-- PERSONAL PROFILE INFORMATION -->
 <div class="container" ng-controller="PersonalProfileController">
-    <img ng-src="images/default-male.png" ng-show="profile.gender == 'Male' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Profile image" width="120" height="130">
-    <img ng-src="images/default-female.png" ng-show="profile.gender == 'Female' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Profile image" width="120" height="130">
-    <img ng-src="{{ profilePicture.location }}" ng-show="profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Profile image" width="120" height="130">
+
+	<a data-lightbox="{{ user.name }}" ng-show="profilePicture" data-title="{{ profilePicture.caption }}" href="{{ profilePicture.location }}" style="float: left; margin-right: 15px;">
+		<img class="img-circle" width="120" height="130" src="{{ profilePicture.location }}" data-src="{{ profilePicture.location }}" style="border: 2px solid black" />
+	</a>
+	<a data-lightbox="{{ user.name }}_male" ng-show="profile.gender == 'Male' && !profilePicture" data-title="Default male profile picture" href="images/default-male.png" style="float: left; margin-right: 15px">
+		<img class="img-circle" width="120" height="130" src="images/default-male.png" data-src="images/default-male.png" style="border: 2px solid black" />
+	</a>
+	<a data-lightbox="{{ user.name }}_female" ng-show="profile.gender == 'Female' && !profilePicture" data-title="Default female profile picture" href="images/default-female.png" style="float: left; margin-right: 15px">
+		<img class="img-circle" width="120" height="130" src="images/default-female.png" data-src="images/default-female.png" style="border: 2px solid black" />
+	</a>
+
+
+    <!-- <img ng-src="images/default-male.png" ng-show="profile.gender == 'Male' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Profile image" width="120" height="130"> -->
+    <!-- <img ng-src="images/default-female.png" ng-show="profile.gender == 'Female' && !profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Profile image" width="120" height="130"> -->
+    <!-- <img ng-src="{{ profilePicture.location }}" ng-show="profilePicture" style="float: left; margin-right: 15px; border: 2px solid black" class="img-circle" alt="Profile image" width="120" height="130">  -->
 
 
     <button type="button" class="btn btn-danger" style="float: right" ng-show="authenticated && currentUser.id == user.id" ng-click="toggleActivation()">
