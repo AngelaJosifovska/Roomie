@@ -83,3 +83,4 @@ roomie.factory('ProfileService', function($http, $rootScope) {
     }
 
 });
+//change because of github problem

@@ -3,9 +3,9 @@
  */
 
 roomie.controller('RoommateProfileController',
-    ['$scope', '$http', '$rootScope', '$filter', '$stateParams', 'ProfileService',
+    ['$scope', '$http', '$state','$rootScope', '$filter', '$stateParams', 'ProfileService',
 
-        function($scope, $http, $rootScope, $filter, $stateParams, ProfileService)
+        function($scope, $http, $state, $rootScope, $filter, $stateParams, ProfileService)
         {
             $scope.profile = {
                 cleanliness: 0,
@@ -64,7 +64,7 @@ roomie.controller('RoommateProfileController',
                     $scope.loading = false;
                     $scope.profile = data;
                     $scope.profile.move_in_from = new Date($scope.profile.move_in_from);
-                    //console.log(data);
+                    console.log($scope.profile);
                 }).error(function (data) {
                     console.log(data);
                     $scope.loading = false;
@@ -83,8 +83,11 @@ roomie.controller('RoommateProfileController',
 
                 ProfileService.saveMyRoommateProfile($scope.profile).success(function (data) {
                     $scope.loading = false;
-                    $scope.profile = data;
+                    console.log("data");
                     console.log(data);
+                    $scope.profile = data.roommate_profile;
+                    $scope.profile.user_id = data.id;
+                    
                 }).error(function (data) {
                     console.log(data);
                     $scope.loading = false;
@@ -96,7 +99,7 @@ roomie.controller('RoommateProfileController',
                     return;
 
                 $scope.loading = true;
-                $scope.profile.for_user = $rootScope.currentUser.id;
+                $scope.profile.user_id = $rootScope.currentUser.id;
                 $scope.profile.move_in_from = $scope.profile.move_in_from.toISOString().slice(0, 10);
 
                 ProfileService.createMyRoommateProfile($scope.profile).success(function (data) {
@@ -129,3 +132,4 @@ roomie.controller('RoommateProfileController',
         }
 
     ]);
+//change because of github problem
